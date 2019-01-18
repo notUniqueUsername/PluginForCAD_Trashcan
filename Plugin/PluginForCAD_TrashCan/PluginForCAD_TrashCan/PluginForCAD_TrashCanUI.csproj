@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2DD4C4DD-9FAA-4AD2-B26E-B309C5B3B5B0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>PluginForCAD_TrashCan</RootNamespace>
-    <AssemblyName>PluginForCAD_TrashCan</AssemblyName>
+    <RootNamespace>PluginForCAD_TrashCanUI</RootNamespace>
+    <AssemblyName>PluginForCAD_TrashCanUI</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -65,6 +65,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

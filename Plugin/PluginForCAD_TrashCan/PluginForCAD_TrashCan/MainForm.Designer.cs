@@ -1,4 +1,4 @@
-﻿namespace PluginForCAD_TrashCan
+﻿namespace PluginForCAD_TrashCanUI
 {
     partial class MainForm
     {
@@ -36,7 +36,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.UrnFormComboBox = new System.Windows.Forms.ComboBox();
             this.TopWidthTextBox = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
@@ -159,17 +159,17 @@
             this.label8.TabIndex = 7;
             this.label8.Text = "Форма урны";
             // 
-            // comboBox1
+            // UrnFormComboBox
             // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.UrnFormComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(207, 96);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(189, 21);
-            this.comboBox1.TabIndex = 8;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.UrnFormComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.UrnFormComboBox.FormattingEnabled = true;
+            this.UrnFormComboBox.Location = new System.Drawing.Point(207, 96);
+            this.UrnFormComboBox.Name = "UrnFormComboBox";
+            this.UrnFormComboBox.Size = new System.Drawing.Size(189, 21);
+            this.UrnFormComboBox.TabIndex = 8;
+            this.UrnFormComboBox.SelectedIndexChanged += new System.EventHandler(this.UrnFormComboBox_SelectedIndexChanged);
             // 
             // TopWidthTextBox
             // 
@@ -177,7 +177,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TopWidthTextBox.Location = new System.Drawing.Point(207, 276);
             this.TopWidthTextBox.Name = "TopWidthTextBox";
-            this.TopWidthTextBox.Size = new System.Drawing.Size(168, 20);
+            this.TopWidthTextBox.Size = new System.Drawing.Size(189, 20);
             this.TopWidthTextBox.TabIndex = 10;
             // 
             // textBox3
@@ -186,7 +186,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox3.Location = new System.Drawing.Point(207, 396);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(168, 20);
+            this.textBox3.Size = new System.Drawing.Size(189, 20);
             this.textBox3.TabIndex = 11;
             // 
             // textBox4
@@ -195,7 +195,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox4.Location = new System.Drawing.Point(207, 366);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(168, 20);
+            this.textBox4.Size = new System.Drawing.Size(189, 20);
             this.textBox4.TabIndex = 12;
             // 
             // textBox5
@@ -204,7 +204,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox5.Location = new System.Drawing.Point(207, 306);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(168, 20);
+            this.textBox5.Size = new System.Drawing.Size(189, 20);
             this.textBox5.TabIndex = 13;
             // 
             // textBox6
@@ -213,7 +213,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox6.Location = new System.Drawing.Point(207, 336);
             this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(168, 20);
+            this.textBox6.Size = new System.Drawing.Size(189, 20);
             this.textBox6.TabIndex = 14;
             // 
             // TopLengthORRadiusTextBox
@@ -222,7 +222,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TopLengthORRadiusTextBox.Location = new System.Drawing.Point(207, 246);
             this.TopLengthORRadiusTextBox.Name = "TopLengthORRadiusTextBox";
-            this.TopLengthORRadiusTextBox.Size = new System.Drawing.Size(168, 20);
+            this.TopLengthORRadiusTextBox.Size = new System.Drawing.Size(189, 20);
             this.TopLengthORRadiusTextBox.TabIndex = 15;
             // 
             // BottomWidthTextBox
@@ -231,7 +231,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.BottomWidthTextBox.Location = new System.Drawing.Point(207, 186);
             this.BottomWidthTextBox.Name = "BottomWidthTextBox";
-            this.BottomWidthTextBox.Size = new System.Drawing.Size(168, 20);
+            this.BottomWidthTextBox.Size = new System.Drawing.Size(189, 20);
             this.BottomWidthTextBox.TabIndex = 16;
             // 
             // BottomLengthORRadiusTextBox
@@ -240,7 +240,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.BottomLengthORRadiusTextBox.Location = new System.Drawing.Point(207, 156);
             this.BottomLengthORRadiusTextBox.Name = "BottomLengthORRadiusTextBox";
-            this.BottomLengthORRadiusTextBox.Size = new System.Drawing.Size(168, 20);
+            this.BottomLengthORRadiusTextBox.Size = new System.Drawing.Size(189, 20);
             this.BottomLengthORRadiusTextBox.TabIndex = 17;
             // 
             // TopLengthLabel
@@ -304,6 +304,7 @@
             this.CloseKompasButton.TabIndex = 22;
             this.CloseKompasButton.Text = "Отключить компас";
             this.CloseKompasButton.UseVisualStyleBackColor = true;
+            this.CloseKompasButton.Click += new System.EventHandler(this.CloseKompasButton_Click);
             // 
             // BuildButton
             // 
@@ -314,6 +315,7 @@
             this.BuildButton.TabIndex = 23;
             this.BuildButton.Text = "Построить";
             this.BuildButton.UseVisualStyleBackColor = true;
+            this.BuildButton.Click += new System.EventHandler(this.BuildButton_Click);
             // 
             // ConnectButton
             // 
@@ -324,6 +326,7 @@
             this.ConnectButton.TabIndex = 24;
             this.ConnectButton.Text = "Подключить компас";
             this.ConnectButton.UseVisualStyleBackColor = true;
+            this.ConnectButton.Click += new System.EventHandler(this.ConnectButton_Click);
             // 
             // ExitButton
             // 
@@ -334,6 +337,7 @@
             this.ExitButton.TabIndex = 25;
             this.ExitButton.Text = "Закрыть";
             this.ExitButton.UseVisualStyleBackColor = true;
+            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
             // 
             // MainForm
             // 
@@ -356,7 +360,7 @@
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.TopWidthTextBox);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.UrnFormComboBox);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -366,7 +370,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.MaximumSize = new System.Drawing.Size(2048, 512);
-            this.MinimumSize = new System.Drawing.Size(0, 512);
+            this.MinimumSize = new System.Drawing.Size(16, 512);
             this.Name = "MainForm";
             this.Text = "TrashCanApp";
             this.ResumeLayout(false);
@@ -384,7 +388,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox UrnFormComboBox;
         private System.Windows.Forms.TextBox TopWidthTextBox;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox4;

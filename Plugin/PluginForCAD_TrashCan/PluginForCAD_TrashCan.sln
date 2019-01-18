@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginForCAD_TrashCan", "PluginForCAD_TrashCan\PluginForCAD_TrashCan.csproj", "{2DD4C4DD-9FAA-4AD2-B26E-B309C5B3B5B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginForCAD_TrashCanUI", "PluginForCAD_TrashCan\PluginForCAD_TrashCanUI.csproj", "{2DD4C4DD-9FAA-4AD2-B26E-B309C5B3B5B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
