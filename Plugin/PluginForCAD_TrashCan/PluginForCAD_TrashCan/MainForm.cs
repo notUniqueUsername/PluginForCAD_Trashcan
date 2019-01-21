@@ -7,11 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Kompas6API5;
+using PluginForCAD_TrashcanLibrary;
 
 namespace PluginForCAD_TrashCanUI
 {
     public partial class MainForm : Form
     {
+        private KompasConnector _kompasObject = new KompasConnector();
         private Label _topRadiusLabel = new Label();
         private Label _bottomRadiusLabel = new Label();
 
@@ -83,12 +86,12 @@ namespace PluginForCAD_TrashCanUI
 
         private void ConnectButton_Click(object sender, EventArgs e)
         {
-
+            _kompasObject.StartKompas();
         }
 
         private void CloseKompasButton_Click(object sender, EventArgs e)
         {
-
+            _kompasObject.CloseKompas();
         }
     }
 }
