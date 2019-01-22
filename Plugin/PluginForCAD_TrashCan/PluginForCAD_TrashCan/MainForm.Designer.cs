@@ -54,6 +54,7 @@
             this.ConnectButton = new System.Windows.Forms.Button();
             this.ExitButton = new System.Windows.Forms.Button();
             this.StandCheckBox = new System.Windows.Forms.CheckBox();
+            this.TestButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -156,6 +157,8 @@
             // 
             // TopWidthTextBox
             // 
+            this.TopWidthTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TopWidthTextBox.Location = new System.Drawing.Point(207, 279);
             this.TopWidthTextBox.Name = "TopWidthTextBox";
             this.TopWidthTextBox.Size = new System.Drawing.Size(166, 20);
@@ -163,6 +166,8 @@
             // 
             // WallThicknessTextBox
             // 
+            this.WallThicknessTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.WallThicknessTextBox.Location = new System.Drawing.Point(207, 369);
             this.WallThicknessTextBox.Name = "WallThicknessTextBox";
             this.WallThicknessTextBox.Size = new System.Drawing.Size(166, 20);
@@ -170,6 +175,8 @@
             // 
             // BottomThicknessTextBox
             // 
+            this.BottomThicknessTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.BottomThicknessTextBox.Location = new System.Drawing.Point(207, 339);
             this.BottomThicknessTextBox.Name = "BottomThicknessTextBox";
             this.BottomThicknessTextBox.Size = new System.Drawing.Size(166, 20);
@@ -177,6 +184,8 @@
             // 
             // UrnHeightTextBox
             // 
+            this.UrnHeightTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.UrnHeightTextBox.Location = new System.Drawing.Point(207, 309);
             this.UrnHeightTextBox.Name = "UrnHeightTextBox";
             this.UrnHeightTextBox.Size = new System.Drawing.Size(166, 20);
@@ -184,6 +193,8 @@
             // 
             // StandHeightTextBox
             // 
+            this.StandHeightTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.StandHeightTextBox.Location = new System.Drawing.Point(207, 432);
             this.StandHeightTextBox.Name = "StandHeightTextBox";
             this.StandHeightTextBox.Size = new System.Drawing.Size(166, 20);
@@ -191,6 +202,8 @@
             // 
             // TopLengthORRadiusTextBox
             // 
+            this.TopLengthORRadiusTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TopLengthORRadiusTextBox.Location = new System.Drawing.Point(207, 249);
             this.TopLengthORRadiusTextBox.Name = "TopLengthORRadiusTextBox";
             this.TopLengthORRadiusTextBox.Size = new System.Drawing.Size(166, 20);
@@ -198,6 +211,8 @@
             // 
             // BottomWidthTextBox
             // 
+            this.BottomWidthTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.BottomWidthTextBox.Location = new System.Drawing.Point(207, 189);
             this.BottomWidthTextBox.Name = "BottomWidthTextBox";
             this.BottomWidthTextBox.Size = new System.Drawing.Size(166, 20);
@@ -205,6 +220,8 @@
             // 
             // BottomLengthORRadiusTextBox
             // 
+            this.BottomLengthORRadiusTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.BottomLengthORRadiusTextBox.Location = new System.Drawing.Point(207, 159);
             this.BottomLengthORRadiusTextBox.Name = "BottomLengthORRadiusTextBox";
             this.BottomLengthORRadiusTextBox.Size = new System.Drawing.Size(166, 20);
@@ -266,7 +283,8 @@
             // 
             // BuildButton
             // 
-            this.BuildButton.Location = new System.Drawing.Point(223, 513);
+            this.BuildButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BuildButton.Location = new System.Drawing.Point(232, 513);
             this.BuildButton.Name = "BuildButton";
             this.BuildButton.Size = new System.Drawing.Size(75, 23);
             this.BuildButton.TabIndex = 23;
@@ -286,7 +304,8 @@
             // 
             // ExitButton
             // 
-            this.ExitButton.Location = new System.Drawing.Point(304, 513);
+            this.ExitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExitButton.Location = new System.Drawing.Point(313, 513);
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.Size = new System.Drawing.Size(75, 23);
             this.ExitButton.TabIndex = 25;
@@ -309,11 +328,22 @@
             this.StandCheckBox.UseVisualStyleBackColor = true;
             this.StandCheckBox.CheckedChanged += new System.EventHandler(this.StandCheckBox_CheckedChanged);
             // 
+            // TestButton
+            // 
+            this.TestButton.Location = new System.Drawing.Point(12, 512);
+            this.TestButton.Name = "TestButton";
+            this.TestButton.Size = new System.Drawing.Size(75, 23);
+            this.TestButton.TabIndex = 28;
+            this.TestButton.Text = "Test";
+            this.TestButton.UseVisualStyleBackColor = true;
+            this.TestButton.Click += new System.EventHandler(this.TestButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(391, 538);
+            this.Controls.Add(this.TestButton);
             this.Controls.Add(this.StandCheckBox);
             this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.ConnectButton);
@@ -340,8 +370,8 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.MaximumSize = new System.Drawing.Size(2048, 1024);
-            this.MinimumSize = new System.Drawing.Size(16, 512);
+            this.MaximumSize = new System.Drawing.Size(2048, 577);
+            this.MinimumSize = new System.Drawing.Size(407, 577);
             this.Name = "MainForm";
             this.Text = "TrashCanApp";
             this.ResumeLayout(false);
@@ -377,6 +407,7 @@
         private System.Windows.Forms.Button ConnectButton;
         private System.Windows.Forms.Button ExitButton;
         private System.Windows.Forms.CheckBox StandCheckBox;
+        private System.Windows.Forms.Button TestButton;
     }
 }
 

@@ -23,6 +23,9 @@ namespace PluginForCAD_TrashCanUI
         public MainForm()
         {
             InitializeComponent();
+#if !DEBUG
+            TestButton.Visible = false;
+#endif
             UrnFormComboBox.Items.Insert(0, "Паралелепипидная");
             UrnFormComboBox.Items.Insert(1, "Цилиндрическая");
             UrnFormComboBox.SelectedIndex = 0;
@@ -122,7 +125,7 @@ namespace PluginForCAD_TrashCanUI
             }
             catch (ArgumentException ex)
             {
-                MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK);
+                MessageBox.Show(ex.Message, "Что-то пошло не так", MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
             
         }
@@ -154,6 +157,18 @@ namespace PluginForCAD_TrashCanUI
                 StandHeightTextBox.Visible = false;
                 StandHeightLabel.Visible = false;
             }
+        }
+
+        private void TestButton_Click(object sender, EventArgs e)
+        {
+            BottomThicknessTextBox.Text = "2";
+            WallThicknessTextBox.Text = "1";
+            UrnHeightTextBox.Text = "30";
+            BottomWidthTextBox.Text = "20";
+            TopWidthTextBox.Text = "20";
+            BottomLengthORRadiusTextBox.Text = "20";
+            TopLengthORRadiusTextBox.Text = "20";
+            StandHeightTextBox.Text = "40";
         }
     }
 }
