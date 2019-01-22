@@ -14,6 +14,8 @@ namespace PluginForCAD_TrashCanUI
 {
     public partial class MainForm : Form
     {
+        private Parameters _parameters;
+        private UrnForms _urnForms;
         private KompasConnector _kompasObject = new KompasConnector();
         private Label _topRadiusLabel = new Label();
         private Label _bottomRadiusLabel = new Label();
@@ -25,6 +27,19 @@ namespace PluginForCAD_TrashCanUI
             UrnFormComboBox.Items.Insert(1, "Цилиндрическая");
             UrnFormComboBox.SelectedIndex = 0;
 
+        }
+
+        private double StringTODouble(string text)
+        {
+            double result;
+            if (double.TryParse(text, out result))
+            {
+                return result;
+            }
+            else
+            {
+                throw new ArgumentException("Введено не число");
+            }
         }
 
         private void UrnFormComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -60,8 +75,8 @@ namespace PluginForCAD_TrashCanUI
                         _bottomRadiusLabel.Enabled = true;
                         _topRadiusLabel.Text = "Радиус";
                         _bottomRadiusLabel.Text = "Радиус";
-                        _topRadiusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F); ;
-                        _bottomRadiusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F); ;
+                        _topRadiusLabel.Font = new Font("Microsoft Sans Serif", 14F); ;
+                        _bottomRadiusLabel.Font = new Font("Microsoft Sans Serif", 14F); ;
                         _topRadiusLabel.Visible = true;
                         _bottomRadiusLabel.Visible = true;
                         Controls.Add(_bottomRadiusLabel);
@@ -76,7 +91,40 @@ namespace PluginForCAD_TrashCanUI
 
         private void BuildButton_Click(object sender, EventArgs e)
         {
-
+            var parametersList = new List<double>();
+            parametersList.Add(StringTODouble(BottomThicknessTextBox.Text));
+            parametersList.Add(StringTODouble(WallThicknessTextBox.Text));
+            parametersList.Add(StringTODouble(UrnHeightTextBox.Text));
+            switch (UrnFormComboBox.SelectedIndex)
+            {
+                case 0:
+                    parametersList.Add(StringTODouble(BottomWidthTextBox.Text));
+                    parametersList.Add(StringTODouble(TopWidthTextBox.Text));
+                    parametersList.Add(StringTODouble(BottomLengthORRadiusTextBox.Text));
+                    parametersList.Add(StringTODouble(TopLengthORRadiusTextBox.Text));
+                    _urnForms = UrnForms.Rectangle;
+                    break;
+                case 1:
+                    parametersList.Add(StringTODouble(TopLengthORRadiusTextBox.Text));
+                    parametersList.Add(StringTODouble(BottomLengthORRadiusTextBox.Text));
+                    _urnForms = UrnForms.Circle;
+                    break;
+                default:
+                    break;
+            }
+            if (StandCheckBox.Checked)
+            {
+                parametersList.Add(StringTODouble(StandHeightTextBox.Text));
+            }
+            try
+            {
+                _parameters = new Parameters(parametersList,_urnForms,StandCheckBox.Checked);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK);
+            }
+            
         }
 
         private void ExitButton_Click(object sender, EventArgs e)
@@ -92,6 +140,20 @@ namespace PluginForCAD_TrashCanUI
         private void CloseKompasButton_Click(object sender, EventArgs e)
         {
             _kompasObject.CloseKompas();
+        }
+
+        private void StandCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (StandCheckBox.Checked)
+            {
+                StandHeightTextBox.Visible = true;
+                StandHeightLabel.Visible = true;
+            }
+            else
+            {
+                StandHeightTextBox.Visible = false;
+                StandHeightLabel.Visible = false;
+            }
         }
     }
 }

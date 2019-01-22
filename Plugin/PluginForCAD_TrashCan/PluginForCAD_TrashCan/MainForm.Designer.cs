@@ -33,15 +33,15 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.StandHeightLabel = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.UrnFormComboBox = new System.Windows.Forms.ComboBox();
             this.TopWidthTextBox = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.WallThicknessTextBox = new System.Windows.Forms.TextBox();
+            this.BottomThicknessTextBox = new System.Windows.Forms.TextBox();
+            this.UrnHeightTextBox = new System.Windows.Forms.TextBox();
+            this.StandHeightTextBox = new System.Windows.Forms.TextBox();
             this.TopLengthORRadiusTextBox = new System.Windows.Forms.TextBox();
             this.BottomWidthTextBox = new System.Windows.Forms.TextBox();
             this.BottomLengthORRadiusTextBox = new System.Windows.Forms.TextBox();
@@ -53,15 +53,14 @@
             this.BuildButton = new System.Windows.Forms.Button();
             this.ConnectButton = new System.Windows.Forms.Button();
             this.ExitButton = new System.Windows.Forms.Button();
+            this.StandCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label1.Location = new System.Drawing.Point(18, 3);
+            this.label1.Location = new System.Drawing.Point(18, 6);
             this.label1.Margin = new System.Windows.Forms.Padding(3);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 24);
@@ -70,11 +69,9 @@
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label2.Location = new System.Drawing.Point(12, 121);
+            this.label2.Location = new System.Drawing.Point(12, 124);
             this.label2.Margin = new System.Windows.Forms.Padding(3);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(183, 24);
@@ -83,11 +80,9 @@
             // 
             // label3
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label3.Location = new System.Drawing.Point(12, 211);
+            this.label3.Location = new System.Drawing.Point(12, 214);
             this.label3.Margin = new System.Windows.Forms.Padding(3);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(189, 24);
@@ -96,11 +91,9 @@
             // 
             // label4
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label4.Location = new System.Drawing.Point(12, 301);
+            this.label4.Location = new System.Drawing.Point(12, 304);
             this.label4.Margin = new System.Windows.Forms.Padding(3);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(125, 24);
@@ -109,37 +102,31 @@
             // 
             // label5
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label5.Location = new System.Drawing.Point(12, 391);
+            this.label5.Location = new System.Drawing.Point(12, 364);
             this.label5.Margin = new System.Windows.Forms.Padding(3);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(155, 24);
             this.label5.TabIndex = 4;
             this.label5.Text = "Толщина стенок";
             // 
-            // label6
+            // StandHeightLabel
             // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label6.Location = new System.Drawing.Point(12, 331);
-            this.label6.Margin = new System.Windows.Forms.Padding(3);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(143, 24);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Высота стойки";
+            this.StandHeightLabel.AutoSize = true;
+            this.StandHeightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.StandHeightLabel.Location = new System.Drawing.Point(12, 427);
+            this.StandHeightLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.StandHeightLabel.Name = "StandHeightLabel";
+            this.StandHeightLabel.Size = new System.Drawing.Size(143, 24);
+            this.StandHeightLabel.TabIndex = 5;
+            this.StandHeightLabel.Text = "Высота стойки";
             // 
             // label7
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label7.Location = new System.Drawing.Point(11, 361);
+            this.label7.Location = new System.Drawing.Point(11, 334);
             this.label7.Margin = new System.Windows.Forms.Padding(3);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(126, 24);
@@ -148,11 +135,9 @@
             // 
             // label8
             // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label8.Location = new System.Drawing.Point(12, 91);
+            this.label8.Location = new System.Drawing.Point(12, 94);
             this.label8.Margin = new System.Windows.Forms.Padding(3);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(120, 24);
@@ -161,95 +146,75 @@
             // 
             // UrnFormComboBox
             // 
-            this.UrnFormComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.UrnFormComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.UrnFormComboBox.FormattingEnabled = true;
-            this.UrnFormComboBox.Location = new System.Drawing.Point(207, 96);
+            this.UrnFormComboBox.Location = new System.Drawing.Point(207, 99);
             this.UrnFormComboBox.Name = "UrnFormComboBox";
-            this.UrnFormComboBox.Size = new System.Drawing.Size(189, 21);
+            this.UrnFormComboBox.Size = new System.Drawing.Size(166, 21);
             this.UrnFormComboBox.TabIndex = 8;
             this.UrnFormComboBox.SelectedIndexChanged += new System.EventHandler(this.UrnFormComboBox_SelectedIndexChanged);
             // 
             // TopWidthTextBox
             // 
-            this.TopWidthTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TopWidthTextBox.Location = new System.Drawing.Point(207, 276);
+            this.TopWidthTextBox.Location = new System.Drawing.Point(207, 279);
             this.TopWidthTextBox.Name = "TopWidthTextBox";
-            this.TopWidthTextBox.Size = new System.Drawing.Size(189, 20);
+            this.TopWidthTextBox.Size = new System.Drawing.Size(166, 20);
             this.TopWidthTextBox.TabIndex = 10;
             // 
-            // textBox3
+            // WallThicknessTextBox
             // 
-            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox3.Location = new System.Drawing.Point(207, 396);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(189, 20);
-            this.textBox3.TabIndex = 11;
+            this.WallThicknessTextBox.Location = new System.Drawing.Point(207, 369);
+            this.WallThicknessTextBox.Name = "WallThicknessTextBox";
+            this.WallThicknessTextBox.Size = new System.Drawing.Size(166, 20);
+            this.WallThicknessTextBox.TabIndex = 11;
             // 
-            // textBox4
+            // BottomThicknessTextBox
             // 
-            this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox4.Location = new System.Drawing.Point(207, 366);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(189, 20);
-            this.textBox4.TabIndex = 12;
+            this.BottomThicknessTextBox.Location = new System.Drawing.Point(207, 339);
+            this.BottomThicknessTextBox.Name = "BottomThicknessTextBox";
+            this.BottomThicknessTextBox.Size = new System.Drawing.Size(166, 20);
+            this.BottomThicknessTextBox.TabIndex = 12;
             // 
-            // textBox5
+            // UrnHeightTextBox
             // 
-            this.textBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox5.Location = new System.Drawing.Point(207, 306);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(189, 20);
-            this.textBox5.TabIndex = 13;
+            this.UrnHeightTextBox.Location = new System.Drawing.Point(207, 309);
+            this.UrnHeightTextBox.Name = "UrnHeightTextBox";
+            this.UrnHeightTextBox.Size = new System.Drawing.Size(166, 20);
+            this.UrnHeightTextBox.TabIndex = 13;
             // 
-            // textBox6
+            // StandHeightTextBox
             // 
-            this.textBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox6.Location = new System.Drawing.Point(207, 336);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(189, 20);
-            this.textBox6.TabIndex = 14;
+            this.StandHeightTextBox.Location = new System.Drawing.Point(207, 432);
+            this.StandHeightTextBox.Name = "StandHeightTextBox";
+            this.StandHeightTextBox.Size = new System.Drawing.Size(166, 20);
+            this.StandHeightTextBox.TabIndex = 14;
             // 
             // TopLengthORRadiusTextBox
             // 
-            this.TopLengthORRadiusTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TopLengthORRadiusTextBox.Location = new System.Drawing.Point(207, 246);
+            this.TopLengthORRadiusTextBox.Location = new System.Drawing.Point(207, 249);
             this.TopLengthORRadiusTextBox.Name = "TopLengthORRadiusTextBox";
-            this.TopLengthORRadiusTextBox.Size = new System.Drawing.Size(189, 20);
+            this.TopLengthORRadiusTextBox.Size = new System.Drawing.Size(166, 20);
             this.TopLengthORRadiusTextBox.TabIndex = 15;
             // 
             // BottomWidthTextBox
             // 
-            this.BottomWidthTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.BottomWidthTextBox.Location = new System.Drawing.Point(207, 186);
+            this.BottomWidthTextBox.Location = new System.Drawing.Point(207, 189);
             this.BottomWidthTextBox.Name = "BottomWidthTextBox";
-            this.BottomWidthTextBox.Size = new System.Drawing.Size(189, 20);
+            this.BottomWidthTextBox.Size = new System.Drawing.Size(166, 20);
             this.BottomWidthTextBox.TabIndex = 16;
             // 
             // BottomLengthORRadiusTextBox
             // 
-            this.BottomLengthORRadiusTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.BottomLengthORRadiusTextBox.Location = new System.Drawing.Point(207, 156);
+            this.BottomLengthORRadiusTextBox.Location = new System.Drawing.Point(207, 159);
             this.BottomLengthORRadiusTextBox.Name = "BottomLengthORRadiusTextBox";
-            this.BottomLengthORRadiusTextBox.Size = new System.Drawing.Size(189, 20);
+            this.BottomLengthORRadiusTextBox.Size = new System.Drawing.Size(166, 20);
             this.BottomLengthORRadiusTextBox.TabIndex = 17;
             // 
             // TopLengthLabel
             // 
-            this.TopLengthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.TopLengthLabel.AutoSize = true;
             this.TopLengthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.TopLengthLabel.Location = new System.Drawing.Point(12, 241);
+            this.TopLengthLabel.Location = new System.Drawing.Point(12, 244);
             this.TopLengthLabel.Margin = new System.Windows.Forms.Padding(3);
             this.TopLengthLabel.Name = "TopLengthLabel";
             this.TopLengthLabel.Size = new System.Drawing.Size(66, 24);
@@ -258,11 +223,9 @@
             // 
             // BottomWidthLabel
             // 
-            this.BottomWidthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.BottomWidthLabel.AutoSize = true;
             this.BottomWidthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.BottomWidthLabel.Location = new System.Drawing.Point(12, 181);
+            this.BottomWidthLabel.Location = new System.Drawing.Point(12, 184);
             this.BottomWidthLabel.Margin = new System.Windows.Forms.Padding(3);
             this.BottomWidthLabel.Name = "BottomWidthLabel";
             this.BottomWidthLabel.Size = new System.Drawing.Size(78, 24);
@@ -271,11 +234,9 @@
             // 
             // BottomLengthLabel
             // 
-            this.BottomLengthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.BottomLengthLabel.AutoSize = true;
             this.BottomLengthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.BottomLengthLabel.Location = new System.Drawing.Point(11, 151);
+            this.BottomLengthLabel.Location = new System.Drawing.Point(11, 154);
             this.BottomLengthLabel.Margin = new System.Windows.Forms.Padding(3);
             this.BottomLengthLabel.Name = "BottomLengthLabel";
             this.BottomLengthLabel.Size = new System.Drawing.Size(66, 24);
@@ -284,11 +245,9 @@
             // 
             // TopWidthLabel
             // 
-            this.TopWidthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.TopWidthLabel.AutoSize = true;
             this.TopWidthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.TopWidthLabel.Location = new System.Drawing.Point(12, 271);
+            this.TopWidthLabel.Location = new System.Drawing.Point(12, 274);
             this.TopWidthLabel.Margin = new System.Windows.Forms.Padding(3);
             this.TopWidthLabel.Name = "TopWidthLabel";
             this.TopWidthLabel.Size = new System.Drawing.Size(78, 24);
@@ -297,8 +256,7 @@
             // 
             // CloseKompasButton
             // 
-            this.CloseKompasButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.CloseKompasButton.Location = new System.Drawing.Point(16, 62);
+            this.CloseKompasButton.Location = new System.Drawing.Point(16, 65);
             this.CloseKompasButton.Name = "CloseKompasButton";
             this.CloseKompasButton.Size = new System.Drawing.Size(179, 23);
             this.CloseKompasButton.TabIndex = 22;
@@ -308,8 +266,7 @@
             // 
             // BuildButton
             // 
-            this.BuildButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BuildButton.Location = new System.Drawing.Point(246, 438);
+            this.BuildButton.Location = new System.Drawing.Point(223, 513);
             this.BuildButton.Name = "BuildButton";
             this.BuildButton.Size = new System.Drawing.Size(75, 23);
             this.BuildButton.TabIndex = 23;
@@ -319,8 +276,7 @@
             // 
             // ConnectButton
             // 
-            this.ConnectButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ConnectButton.Location = new System.Drawing.Point(15, 33);
+            this.ConnectButton.Location = new System.Drawing.Point(15, 36);
             this.ConnectButton.Name = "ConnectButton";
             this.ConnectButton.Size = new System.Drawing.Size(180, 23);
             this.ConnectButton.TabIndex = 24;
@@ -330,8 +286,7 @@
             // 
             // ExitButton
             // 
-            this.ExitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExitButton.Location = new System.Drawing.Point(327, 438);
+            this.ExitButton.Location = new System.Drawing.Point(304, 513);
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.Size = new System.Drawing.Size(75, 23);
             this.ExitButton.TabIndex = 25;
@@ -339,11 +294,27 @@
             this.ExitButton.UseVisualStyleBackColor = true;
             this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
             // 
+            // StandCheckBox
+            // 
+            this.StandCheckBox.AutoSize = true;
+            this.StandCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.StandCheckBox.Checked = true;
+            this.StandCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.StandCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.StandCheckBox.Location = new System.Drawing.Point(12, 393);
+            this.StandCheckBox.Name = "StandCheckBox";
+            this.StandCheckBox.Size = new System.Drawing.Size(93, 28);
+            this.StandCheckBox.TabIndex = 27;
+            this.StandCheckBox.Text = "Стойка";
+            this.StandCheckBox.UseVisualStyleBackColor = true;
+            this.StandCheckBox.CheckedChanged += new System.EventHandler(this.StandCheckBox_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(414, 473);
+            this.ClientSize = new System.Drawing.Size(391, 538);
+            this.Controls.Add(this.StandCheckBox);
             this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.ConnectButton);
             this.Controls.Add(this.BuildButton);
@@ -355,21 +326,21 @@
             this.Controls.Add(this.BottomLengthORRadiusTextBox);
             this.Controls.Add(this.BottomWidthTextBox);
             this.Controls.Add(this.TopLengthORRadiusTextBox);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.StandHeightTextBox);
+            this.Controls.Add(this.UrnHeightTextBox);
+            this.Controls.Add(this.BottomThicknessTextBox);
+            this.Controls.Add(this.WallThicknessTextBox);
             this.Controls.Add(this.TopWidthTextBox);
             this.Controls.Add(this.UrnFormComboBox);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.StandHeightLabel);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.MaximumSize = new System.Drawing.Size(2048, 512);
+            this.MaximumSize = new System.Drawing.Size(2048, 1024);
             this.MinimumSize = new System.Drawing.Size(16, 512);
             this.Name = "MainForm";
             this.Text = "TrashCanApp";
@@ -385,15 +356,15 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label StandHeightLabel;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox UrnFormComboBox;
         private System.Windows.Forms.TextBox TopWidthTextBox;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox WallThicknessTextBox;
+        private System.Windows.Forms.TextBox BottomThicknessTextBox;
+        private System.Windows.Forms.TextBox UrnHeightTextBox;
+        private System.Windows.Forms.TextBox StandHeightTextBox;
         private System.Windows.Forms.TextBox TopLengthORRadiusTextBox;
         private System.Windows.Forms.TextBox BottomWidthTextBox;
         private System.Windows.Forms.TextBox BottomLengthORRadiusTextBox;
@@ -405,6 +376,7 @@
         private System.Windows.Forms.Button BuildButton;
         private System.Windows.Forms.Button ConnectButton;
         private System.Windows.Forms.Button ExitButton;
+        private System.Windows.Forms.CheckBox StandCheckBox;
     }
 }
 
