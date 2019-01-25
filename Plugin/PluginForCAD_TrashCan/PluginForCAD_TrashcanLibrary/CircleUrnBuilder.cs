@@ -23,7 +23,7 @@ namespace PluginForCAD_TrashcanLibrary
             _kompas = kompas;
         }
 
-        public void Build(Parameters parameters)
+        public void Build(CircleParameters parameters)
         {
             _doc3D = _kompas.Document3D();
             _doc3D.Create(false, true);

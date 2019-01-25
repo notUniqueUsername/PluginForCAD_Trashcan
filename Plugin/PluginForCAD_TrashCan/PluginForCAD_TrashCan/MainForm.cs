@@ -14,7 +14,8 @@ namespace PluginForCAD_TrashCanUI
 {
     public partial class MainForm : Form
     {
-        private Parameters _parameters;
+        private RectangleParameters _parameters;
+        private CircleParameters _parametersCircle;
         private UrnForms _urnForms;
         private KompasConnector _kompasObject = new KompasConnector();
         private Label _topRadiusLabel = new Label();
@@ -123,14 +124,16 @@ namespace PluginForCAD_TrashCanUI
                     parametersList.Add(StringTODouble(StandHeightTextBox.Text));
                 }
 
-                _parameters = new Parameters(parametersList,_urnForms,StandCheckBox.Checked);
+                
                 switch (_urnForms)
                 {
                     case UrnForms.Circle:
+                        _parametersCircle = new CircleParameters(parametersList, StandCheckBox.Checked);
                         var circleBuilder = new CircleUrnBuilder(_kompasObject.KompasObject);
-                        circleBuilder.Build(_parameters);
+                        circleBuilder.Build(_parametersCircle);
                         break;
                     case UrnForms.Rectangle:
+                        _parameters = new RectangleParameters(parametersList,StandCheckBox.Checked);
                         var rectangleBuilder = new RectangleUrnBuilder(_kompasObject.KompasObject);
                         rectangleBuilder.Build(_parameters);
                         break;

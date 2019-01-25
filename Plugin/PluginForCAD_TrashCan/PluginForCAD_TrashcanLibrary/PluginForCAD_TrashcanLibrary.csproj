@@ -41,10 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CircleParameters.cs" />
     <Compile Include="CircleUrnBuilder.cs" />
     <Compile Include="KompasConnector.cs" />
     <Compile Include="KSConstants.cs" />
-    <Compile Include="Parameters.cs" />
+    <Compile Include="RectangleParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleUrnBuilder.cs" />
     <Compile Include="UrnForms.cs" />
