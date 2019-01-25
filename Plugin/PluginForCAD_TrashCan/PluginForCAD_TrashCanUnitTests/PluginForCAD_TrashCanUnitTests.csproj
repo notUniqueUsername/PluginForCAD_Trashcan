@@ -57,6 +57,7 @@
     <Compile Include="CircleParametersTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleParametersTest.cs" />
+    <Compile Include="StresTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -66,6 +67,17 @@
       <Project>{cd92047e-73ac-4d0d-8aa2-6e17ae5325ac}</Project>
       <Name>PluginForCAD_TrashcanLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Kompas6API5">
+      <Guid>{0422828C-F174-495E-AC5D-D31014DBBE87}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
