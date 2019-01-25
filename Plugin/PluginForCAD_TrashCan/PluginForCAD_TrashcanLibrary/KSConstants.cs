@@ -20,6 +20,8 @@ namespace PluginForCAD_TrashcanLibrary
         o3d_planeXOZ = 2,
         ko_LineSegParam = 11,
         ko_AxisLineParam = 123,
-        o3d_baseRotated = 27
+        o3d_baseRotated = 27,
+        o3d_baseExtrusion = 24,
+        o3d_bossExtrusion = 25
     }
 }

@@ -365,7 +365,48 @@ namespace PluginForCAD_TrashcanLibrary
                 sketchStandStops.EndEdit();
                 #endregion
 
+                #region Выдавливание  упоров
+                ksEntity EntityBaseExtrusion = _part.NewEntity((short)KSConstants.o3d_bossExtrusion);
+                ksBossExtrusionDefinition extrusionDefinition = EntityBaseExtrusion.GetDefinition();
+                extrusionDefinition.directionType = 1;
+                extrusionDefinition.SetSideParam(false, etBlind, 1 , 0, false);
+                extrusionDefinition.SetSketch(sketchStandStops);
+                EntityBaseExtrusion.Create();
+                #endregion
 
+                #region эскиз для ножек
+                ksEntity EntitStandLeg = _part.NewEntity((short)KSConstants.o3d_sketch);
+                ksSketchDefinition sketchStandLeg = EntitStandLeg.GetDefinition();
+                sketchStandLeg.SetPlane(displacedPlaneStandLeg);
+                EntitStandLeg.Create();
+                ksDocument2D Document2DStandLeg = sketchStandLeg.BeginEdit();
+                _rectangleParam = _kompas.GetParamStruct((short)KSConstants.ko_RectangleParam);
+                _rectangleParam.ang = 0;
+                _rectangleParam.y = parameters.RadiusBottom + 1;
+                _rectangleParam.x = 0.5;
+                _rectangleParam.width = -1;
+                _rectangleParam.height = 1;
+                _rectangleParam.style = 1;
+                Document2DStandLeg.ksRectangle(_rectangleParam, 0);
+                _rectangleParam.ang = 0;
+                _rectangleParam.y = -(parameters.RadiusBottom + 1);
+                _rectangleParam.x = -0.5;
+                _rectangleParam.width = 1;
+                _rectangleParam.height = -1;
+                _rectangleParam.style = 1;
+                Document2DStandLeg.ksRectangle(_rectangleParam, 0);
+
+                sketchStandLeg.EndEdit();
+                #endregion
+
+                #region Выдавливание  ножек
+                ksEntity EntityBaseExtrusionLeg = _part.NewEntity((short)KSConstants.o3d_bossExtrusion);
+                ksBossExtrusionDefinition extrusionDefinitionLeg = EntityBaseExtrusionLeg.GetDefinition();
+                extrusionDefinitionLeg.directionType = 1;
+                extrusionDefinitionLeg.SetSideParam(false, etBlind, parameters.StandHeight -1 , 0, false);
+                extrusionDefinitionLeg.SetSketch(sketchStandLeg);
+                EntityBaseExtrusionLeg.Create();
+                #endregion
             }
 
         }
