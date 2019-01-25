@@ -34,8 +34,7 @@ namespace PluginForCAD_TrashCanUI
 
         private double StringTODouble(string text)
         {
-            double result;
-            if (double.TryParse(text, out result))
+            if (double.TryParse(text, out double result))
             {
                 return result;
             }
@@ -122,12 +121,16 @@ namespace PluginForCAD_TrashCanUI
             try
             {
                 _parameters = new Parameters(parametersList,_urnForms,StandCheckBox.Checked);
+                var builder = new CircleUrnBuilder(_kompasObject.KompasObject);
+                builder.Build(_parameters);
             }
             catch (ArgumentException ex)
             {
                 MessageBox.Show(ex.Message, "Что-то пошло не так", MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
-            
+
+
+
         }
 
         private void ExitButton_Click(object sender, EventArgs e)

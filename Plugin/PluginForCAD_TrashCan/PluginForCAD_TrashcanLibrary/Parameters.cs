@@ -30,6 +30,22 @@ namespace PluginForCAD_TrashcanLibrary
 
         public double StandHeight { get; private set; }
 
+        private void ValidateAngle(double top, double bot, double height)
+        {
+            var L = Math.Sqrt(Math.Pow(height, 2) + Math.Pow(bot - top, 2));
+            if (bot != top)
+            {
+                var tgAngle = height / Math.Abs(bot-top);
+                double Angle = Math.Atan(tgAngle)*180/Math.PI;
+                if (Angle<60 )
+                {
+                    throw new ArgumentException("Наклон превышает 60 градусов");
+                }
+            }
+
+        }
+
+
         /// <summary>
         /// Монструозный конструктор
         /// </summary>
@@ -71,13 +87,13 @@ namespace PluginForCAD_TrashcanLibrary
 
             if (Stand)
             {
-                if (parameters[parameters.Count -1] > 0 && parameters[parameters.Count - 1] <= 60)
+                if (parameters[parameters.Count -1] > 0 && parameters[parameters.Count - 1] <= 60 && (parameters[parameters.Count - 1] - UrnHeight) >= 5)
                 {
                     StandHeight = parameters[parameters.Count -1];
                 }
                 else
                 {
-                    throw new ArgumentException("Высота стойки должна быть меньше 60");
+                    throw new ArgumentException("Высота стойки должна быть меньше 60 и на 5 больше высоты урны");
                 }
             }
 
@@ -122,6 +138,7 @@ namespace PluginForCAD_TrashcanLibrary
                                 "размеры нижнего основания должны лежать в пределах от 0.5 до 1.5 размера верхнего основания");
                         }
                     }
+                    ValidateAngle(RadiusTop, RadiusBottom, UrnHeight);
                     break;
                 case UrnForms.Rectangle:
                     if (parameters[3] > 0 && parameters[3] <= 50)
@@ -163,8 +180,8 @@ namespace PluginForCAD_TrashcanLibrary
                     if (Stand)
                     {
                         if (!(LengthBottom >= (0.5 * LengthTop)
-                            && LengthBottom <= LengthTop
-                            && WidthBottom <= WidthTop
+                            && LengthBottom <= LengthTop)
+                            || !(WidthBottom <= WidthTop
                             && WidthBottom >= (0.5 * LengthTop)))
                         {
                             throw new ArgumentException("" +
@@ -183,10 +200,13 @@ namespace PluginForCAD_TrashcanLibrary
                         }
                     }
 
+                    ValidateAngle(LengthTop,LengthBottom,UrnHeight);
+                    ValidateAngle(WidthTop, WidthBottom, UrnHeight);
                     break;
                 default:
                     break;
             }
+
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace PluginForCAD_TrashcanLibrary
 {
     /// <summary>
-    /// Перечисление категорий заметок
+    /// Перечисление возможных форм урны
     /// </summary>
     public enum UrnForms
     {
