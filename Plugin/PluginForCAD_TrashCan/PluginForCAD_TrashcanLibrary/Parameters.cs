@@ -60,7 +60,7 @@ namespace PluginForCAD_TrashcanLibrary
 
             if (parameters[0] > 0 && parameters[0] <= 2)
             {
-                BottomThickness = parameters[0];
+                BottomThickness = parameters[0]*10;
             }
             else
             {
@@ -69,27 +69,27 @@ namespace PluginForCAD_TrashcanLibrary
 
             if (parameters[1] > 0 && parameters[1] <= 1)
             {
-                WallThickness = parameters[1];
+                WallThickness = parameters[1]*10;
             }
             else
             {
                 throw new ArgumentException("Толщина стенок должна быть меньше 1");
             }
 
-            if (parameters[2] > 0 && parameters[2] <= 40)
+            if (parameters[2] > 0 && parameters[2] <= 40 && parameters[2] >= 30)
             {
-                UrnHeight = parameters[2];
+                UrnHeight = parameters[2]*10;
             }
             else
             {
-                throw new ArgumentException("Высота урны должна быть меньше 40");
+                throw new ArgumentException("Высота урны должна быть меньше 40 и больше 30");
             }
 
             if (Stand)
             {
-                if (parameters[parameters.Count -1] > 0 && parameters[parameters.Count - 1] <= 60 && (parameters[parameters.Count - 1] - UrnHeight) >= 5)
+                if (parameters[parameters.Count -1] > 0 && parameters[parameters.Count - 1] <= 60 && (parameters[parameters.Count - 1] - UrnHeight/10) >= 5 )
                 {
-                    StandHeight = parameters[parameters.Count -1];
+                    StandHeight = parameters[parameters.Count -1]*10;
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace PluginForCAD_TrashcanLibrary
 
                     if (parameters[3] > 0 && parameters[3] <= 25)
                     {
-                        RadiusTop = parameters[3];
+                        RadiusTop = parameters[3]*10;
                     }
                     else
                     {
@@ -113,7 +113,7 @@ namespace PluginForCAD_TrashcanLibrary
 
                     if (parameters[4] > 0 && parameters[4] <= 25)
                     {
-                        RadiusBottom = parameters[4];
+                        RadiusBottom = parameters[4]*10;
                     }
                     else
                     {
@@ -122,8 +122,8 @@ namespace PluginForCAD_TrashcanLibrary
 
                     if (Stand)
                     {
-                        if (!(RadiusBottom >= (0.5 * RadiusTop) 
-                            && RadiusBottom <= RadiusTop))
+                        if (!(RadiusTop >= (0.5 * RadiusBottom) 
+                            && RadiusTop <= RadiusBottom))
                         {
                             throw new ArgumentException("" +
                                 "размеры нижнего основания должны лежать в пределах от 0.5 до 1 размера верхнего основания");
@@ -143,7 +143,7 @@ namespace PluginForCAD_TrashcanLibrary
                 case UrnForms.Rectangle:
                     if (parameters[3] > 0 && parameters[3] <= 50)
                     {
-                        WidthBottom = parameters[3];
+                        WidthBottom = parameters[3]*10;
                     }
                     else
                     {
@@ -152,7 +152,7 @@ namespace PluginForCAD_TrashcanLibrary
 
                     if (parameters[4] > 0 && parameters[4] <= 50)
                     {
-                        WidthTop = parameters[4];
+                        WidthTop = parameters[4]*10;
                     }
                     else
                     {
@@ -161,7 +161,7 @@ namespace PluginForCAD_TrashcanLibrary
 
                     if (parameters[5] > 0 && parameters[5] <= 50)
                     {
-                        LengthBottom = parameters[5];
+                        LengthBottom = parameters[5]*10;
                     }
                     else
                     {
@@ -170,7 +170,7 @@ namespace PluginForCAD_TrashcanLibrary
 
                     if (parameters[6] > 0 && parameters[6] <= 50)
                     {
-                        LengthTop = parameters[6];
+                        LengthTop = parameters[6]*10;
                     }
                     else
                     {
@@ -179,10 +179,10 @@ namespace PluginForCAD_TrashcanLibrary
 
                     if (Stand)
                     {
-                        if (!(LengthBottom >= (0.5 * LengthTop)
-                            && LengthBottom <= LengthTop)
-                            || !(WidthBottom <= WidthTop
-                            && WidthBottom >= (0.5 * LengthTop)))
+                        if (!(LengthTop >= (0.5 * LengthBottom)
+                            && LengthTop <= LengthBottom)
+                            || !(WidthTop <= WidthBottom
+                            && LengthTop >= (0.5 * WidthBottom)))
                         {
                             throw new ArgumentException("" +
                                 "Высота и ширина нижнего основания должны лежать в пределах от 0.5 до 1 размера верхнего основания");
@@ -200,7 +200,7 @@ namespace PluginForCAD_TrashcanLibrary
                         }
                     }
 
-                    ValidateAngle(LengthTop,LengthBottom,UrnHeight);
+                    ValidateAngle(LengthTop,LengthBottom, UrnHeight);
                     ValidateAngle(WidthTop, WidthBottom, UrnHeight);
                     break;
                 default:

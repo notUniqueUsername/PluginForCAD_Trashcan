@@ -93,40 +93,60 @@ namespace PluginForCAD_TrashCanUI
 
         private void BuildButton_Click(object sender, EventArgs e)
         {
-            var parametersList = new List<double>();
-            parametersList.Add(StringTODouble(BottomThicknessTextBox.Text));
-            parametersList.Add(StringTODouble(WallThicknessTextBox.Text));
-            parametersList.Add(StringTODouble(UrnHeightTextBox.Text));
-            switch (UrnFormComboBox.SelectedIndex)
-            {
-                case 0:
-                    parametersList.Add(StringTODouble(BottomWidthTextBox.Text));
-                    parametersList.Add(StringTODouble(TopWidthTextBox.Text));
-                    parametersList.Add(StringTODouble(BottomLengthORRadiusTextBox.Text));
-                    parametersList.Add(StringTODouble(TopLengthORRadiusTextBox.Text));
-                    _urnForms = UrnForms.Rectangle;
-                    break;
-                case 1:
-                    parametersList.Add(StringTODouble(TopLengthORRadiusTextBox.Text));
-                    parametersList.Add(StringTODouble(BottomLengthORRadiusTextBox.Text));
-                    _urnForms = UrnForms.Circle;
-                    break;
-                default:
-                    break;
-            }
-            if (StandCheckBox.Checked)
-            {
-                parametersList.Add(StringTODouble(StandHeightTextBox.Text));
-            }
+
             try
             {
+                var parametersList = new List<double>();
+                parametersList.Add(StringTODouble(BottomThicknessTextBox.Text));
+                parametersList.Add(StringTODouble(WallThicknessTextBox.Text));
+                parametersList.Add(StringTODouble(UrnHeightTextBox.Text));
+                switch (UrnFormComboBox.SelectedIndex)
+                {
+                    case 0:
+                        parametersList.Add(StringTODouble(TopWidthTextBox.Text));
+                        parametersList.Add(StringTODouble(BottomWidthTextBox.Text));
+                        parametersList.Add(StringTODouble(TopLengthORRadiusTextBox.Text));
+                        parametersList.Add(StringTODouble(BottomLengthORRadiusTextBox.Text));
+                        
+                        _urnForms = UrnForms.Rectangle;
+                        break;
+                    case 1:
+                        parametersList.Add(StringTODouble(BottomLengthORRadiusTextBox.Text));
+                        parametersList.Add(StringTODouble(TopLengthORRadiusTextBox.Text));
+                        _urnForms = UrnForms.Circle;
+                        break;
+                    default:
+                        break;
+                }
+                if (StandCheckBox.Checked)
+                {
+                    parametersList.Add(StringTODouble(StandHeightTextBox.Text));
+                }
+
                 _parameters = new Parameters(parametersList,_urnForms,StandCheckBox.Checked);
-                var builder = new CircleUrnBuilder(_kompasObject.KompasObject);
-                builder.Build(_parameters);
+                switch (_urnForms)
+                {
+                    case UrnForms.Circle:
+                        var circleBuilder = new CircleUrnBuilder(_kompasObject.KompasObject);
+                        circleBuilder.Build(_parameters);
+                        break;
+                    case UrnForms.Rectangle:
+                        var rectangleBuilder = new RectangleUrnBuilder(_kompasObject.KompasObject);
+                        rectangleBuilder.Build(_parameters);
+                        break;
+                    default:
+                        break;
+                }
+                
+                
             }
             catch (ArgumentException ex)
             {
                 MessageBox.Show(ex.Message, "Что-то пошло не так", MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Сперва нужно запустить компас", "Что-то пошло не так", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
 
