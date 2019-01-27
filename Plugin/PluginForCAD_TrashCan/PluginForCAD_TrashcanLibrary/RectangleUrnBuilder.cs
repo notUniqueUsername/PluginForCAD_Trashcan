@@ -9,16 +9,45 @@ namespace PluginForCAD_TrashcanLibrary
 {
     public class RectangleUrnBuilder
     {
+        /// <summary>
+        /// Экземпляр компаса
+        /// </summary>
         private KompasObject _kompas;
 
+        /// <summary>
+        /// Интерфеис для хранения сущностей(эскиз, операции и прочее)
+        /// </summary>
         private ksEntity _entity;
+
+        /// <summary>
+        /// Деталь
+        /// </summary>
         private ksPart _part;
+
+        /// <summary>
+        /// Струтура параметров 2д окружности
+        /// </summary>
         private ksCircleParam _circleParam;
+
+        /// <summary>
+        /// Струтура параметров 2д прямоугольника
+        /// </summary>
         private ksRectangleParam _rectangleParam;
+
+        /// <summary>
+        /// Струтура параметров 2д отрезка
+        /// </summary>
         private ksLineSegParam _lineParam;
+
+        /// <summary>
+        /// Документ 
+        /// </summary>
         private Document3D _doc3D;
 
-
+        /// <summary>
+        /// Строим пепельницу
+        /// </summary>
+        /// <param name="parameters"></param>
         private void AshtrayBuild(RectangleParameters parameters)
         {
             const double ashtrayHihght = 30;
@@ -162,11 +191,19 @@ namespace PluginForCAD_TrashcanLibrary
 
         }
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="kompas"></param>
         public RectangleUrnBuilder(KompasObject kompas)
         {
             _kompas = kompas;
         }
 
+        /// <summary>
+        /// Строим Урну
+        /// </summary>
+        /// <param name="parameters"></param>
         public void Build(RectangleParameters parameters)
         {
             _doc3D = _kompas.Document3D();

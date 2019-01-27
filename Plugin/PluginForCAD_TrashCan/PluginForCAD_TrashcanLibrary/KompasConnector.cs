@@ -10,7 +10,7 @@ namespace PluginForCAD_TrashcanLibrary
     public class KompasConnector
     {
         /// <summary>
-        /// Объект компаса.
+        /// Экзкмпляр компаса.
         /// </summary>
         public KompasObject KompasObject { get; set; }
 
