@@ -48,7 +48,6 @@
     <Compile Include="RectangleParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleUrnBuilder.cs" />
-    <Compile Include="UrnForms.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Kompas6API5">
