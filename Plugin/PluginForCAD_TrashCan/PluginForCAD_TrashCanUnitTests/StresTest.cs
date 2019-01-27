@@ -26,6 +26,7 @@ namespace PluginForCAD_TrashCanUnitTests
         }
 
         [Test]
+        [TestCase(Ignore = "Нужен не так часто")]
         public void Start()
         {
             StartKompas();
@@ -37,7 +38,7 @@ namespace PluginForCAD_TrashCanUnitTests
             paramList.Add(20);
             paramList.Add(40);
             var builder = new CircleUrnBuilder(_kompas);
-            var parameters = new CircleParameters(paramList, true);//////////////////////////////////
+            var parameters = new CircleParameters(paramList, true,true);//////////////////////////////////
             var count = 1000;
 
             for (int i = 0; i < count; i++)

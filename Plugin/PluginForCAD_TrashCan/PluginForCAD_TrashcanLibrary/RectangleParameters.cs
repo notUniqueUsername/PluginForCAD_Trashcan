@@ -52,7 +52,7 @@ namespace PluginForCAD_TrashcanLibrary
         public bool Stand { get; private set; }
 
         /// <summary>
-        /// Наличие стойки
+        /// Наличие пепельницы
         /// </summary>
         public bool Ashtray { get; private set; }
 
