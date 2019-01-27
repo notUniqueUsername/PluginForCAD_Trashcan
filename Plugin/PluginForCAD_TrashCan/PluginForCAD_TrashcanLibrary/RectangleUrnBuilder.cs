@@ -18,6 +18,150 @@ namespace PluginForCAD_TrashcanLibrary
         private ksLineSegParam _lineParam;
         private Document3D _doc3D;
 
+
+        private void AshtrayBuild(RectangleParameters parameters)
+        {
+            const double ashtrayHihght = 30;
+            const double ashtrayThickness = 5;
+            const double ashtrayRadius = 30;
+            #region Смещение плоскости для основания пепельницы
+            _part = _doc3D.GetPart((short)KSConstants.pTop_part);
+            ksEntity EntityAshtrayPlane = _part.GetDefaultEntity((short)KSConstants.o3d_planeXOY);
+
+            ksEntity ashtrayPlane = _part.NewEntity((short)KSConstants.o3d_planeOffset);
+            ksPlaneOffsetDefinition ashtrayPlaneOffsetDefinition = ashtrayPlane.GetDefinition();
+            ashtrayPlaneOffsetDefinition.direction = true;
+            ashtrayPlaneOffsetDefinition.offset = ashtrayHihght;
+            ashtrayPlaneOffsetDefinition.SetPlane(EntityAshtrayPlane);
+            ashtrayPlane.Create();
+            #endregion
+
+            #region Смещение плоскости для основания толщины пепельницы
+            _part = _doc3D.GetPart((short)KSConstants.pTop_part);
+            ksEntity EntityAshtrayThicknessPlane = _part.GetDefaultEntity((short)KSConstants.o3d_planeXOY);
+
+            ksEntity ashtrayThicknessPlane = _part.NewEntity((short)KSConstants.o3d_planeOffset);
+            ksPlaneOffsetDefinition ashtrayThicknessPlaneOffsetDefinition = ashtrayThicknessPlane.GetDefinition();
+            ashtrayThicknessPlaneOffsetDefinition.direction = true;
+            ashtrayThicknessPlaneOffsetDefinition.offset = ashtrayHihght - ashtrayThickness;
+            ashtrayThicknessPlaneOffsetDefinition.SetPlane(EntityAshtrayThicknessPlane);
+            ashtrayThicknessPlane.Create();
+            #endregion
+
+            #region Эскиз основания пепельницы
+
+            _part = _doc3D.GetPart((short)KSConstants.pTop_part);
+            ksEntity ashtrayEntity = _part.NewEntity((short)KSConstants.o3d_sketch);
+            ksSketchDefinition ashtraySketchDefinition = ashtrayEntity.GetDefinition();
+            ashtraySketchDefinition.SetPlane(ashtrayPlane);
+            ashtrayEntity.Create();
+            ksDocument2D Document2DAshtray = ashtraySketchDefinition.BeginEdit();
+            _lineParam = _kompas.GetParamStruct((short)KSConstants.ko_LineSegParam);
+            _lineParam.y1 = -ashtrayRadius;
+            _lineParam.x1 = parameters.WidthBottom / 2 - parameters.WallThickness / 2;
+            _lineParam.x2 = _lineParam.x1;
+            _lineParam.y2 = ashtrayRadius;
+            _lineParam.style = 1;
+            Document2DAshtray.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _lineParam.style);
+
+            var arcLeftPointX = _lineParam.x1;
+            var arcLeftPointY = _lineParam.y1;
+            var arcRightPointX = _lineParam.x2;
+            var arcRightPointY = _lineParam.y2;
+            var arcMidlePointX = _lineParam.x1 - ashtrayRadius;
+            var arcMidlePointY = 0;
+
+            Document2DAshtray.ksArcBy3Points(arcLeftPointX,arcLeftPointY,arcMidlePointX,arcMidlePointY,arcRightPointX,arcRightPointY,1);
+            ashtraySketchDefinition.EndEdit();
+            #endregion
+
+            #region Эскиз верха основания пепельницы
+
+            _part = _doc3D.GetPart((short)KSConstants.pTop_part);
+            ksEntity ashtrayTopEntity = _part.NewEntity((short)KSConstants.o3d_sketch);
+            ksSketchDefinition ashtrayTopSketchDefinition = ashtrayTopEntity.GetDefinition();
+            ashtrayTopSketchDefinition.SetPlane(ashtrayThicknessPlane);
+            ashtrayTopEntity.Create();
+            ksDocument2D Document2DAshtrayTop = ashtrayTopSketchDefinition.BeginEdit();
+            _lineParam = _kompas.GetParamStruct((short)KSConstants.ko_LineSegParam);
+            _lineParam.y1 = -ashtrayRadius+ ashtrayThickness;
+            _lineParam.x1 = parameters.WidthBottom / 2 - parameters.WallThickness / 2;
+            _lineParam.x2 = _lineParam.x1;
+            _lineParam.y2 = ashtrayRadius - ashtrayThickness;
+            _lineParam.style = 1;
+            Document2DAshtrayTop.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _lineParam.style);
+
+            arcLeftPointX = _lineParam.x1;
+            arcLeftPointY = _lineParam.y1;
+            arcRightPointX = _lineParam.x2;
+            arcRightPointY = _lineParam.y2;
+            arcMidlePointX = _lineParam.x1 - ashtrayRadius + ashtrayThickness;
+            arcMidlePointY = 0-5;
+
+            Document2DAshtrayTop.ksArcBy3Points(arcLeftPointX, arcLeftPointY, arcMidlePointX, arcMidlePointY, arcRightPointX, arcRightPointY, 1);
+            ashtrayTopSketchDefinition.EndEdit();
+            #endregion
+
+            #region Выдавливание пепельницы
+            const short etBlind = 0;
+            const short dtNormal = 0;
+            const short dtReverse = 1;
+            ksEntity EntityBaseExtrusionAshtray = _part.NewEntity((short)KSConstants.o3d_bossExtrusion);
+            ksBossExtrusionDefinition extrusionDefinitionAshtray = EntityBaseExtrusionAshtray.GetDefinition();
+            extrusionDefinitionAshtray.directionType = dtReverse;
+            extrusionDefinitionAshtray.SetSideParam(false, etBlind, ashtrayHihght, 0, false);
+            extrusionDefinitionAshtray.SetSketch(ashtraySketchDefinition);
+            EntityBaseExtrusionAshtray.Create();
+            #endregion
+
+            #region Вырезание полости пепельницы
+            ksEntity EntityCutExtrusionAshtray = _part.NewEntity((short)KSConstants.o3d_cutExtrusion);
+            ksCutExtrusionDefinition cutExtrusionDefinitionAshtray = EntityCutExtrusionAshtray.GetDefinition();
+            cutExtrusionDefinitionAshtray.cut = true;
+            cutExtrusionDefinitionAshtray.directionType = dtNormal;
+            cutExtrusionDefinitionAshtray.SetSideParam(true, etBlind, ashtrayHihght-ashtrayThickness, 0, false);
+            cutExtrusionDefinitionAshtray.SetSketch(ashtrayTopSketchDefinition);
+            EntityCutExtrusionAshtray.Create();
+            #endregion
+
+            #region Эскиз отверстий основания пепельницы
+
+            _part = _doc3D.GetPart((short)KSConstants.pTop_part);
+            ksEntity ashtrayHoleEntity = _part.NewEntity((short)KSConstants.o3d_sketch);
+            ksSketchDefinition ashtrayHoleSketchDefinition = ashtrayHoleEntity.GetDefinition();
+            ashtrayHoleSketchDefinition.SetPlane(ashtrayThicknessPlane);
+            ashtrayHoleEntity.Create();
+            ksDocument2D Document2DAshtrayHole = ashtrayHoleSketchDefinition.BeginEdit();
+            _circleParam = _kompas.GetParamStruct((short)KSConstants.ko_CircleParam);
+            _circleParam.xc = ((parameters.WidthBottom / 2 - parameters.WallThickness / 2)+(parameters.WidthBottom / 2 - parameters.WallThickness / 2 - ashtrayRadius + ashtrayThickness))/2;
+            _circleParam.yc = 0;
+            _circleParam.rad = 0.5;
+            _circleParam.style = 1;
+            Document2DAshtrayHole.ksCircle(_circleParam.xc, _circleParam.yc, _circleParam.rad, _circleParam.style);
+
+            _circleParam.yc = 5;
+            _circleParam.style = 1;
+            Document2DAshtrayHole.ksCircle(_circleParam.xc, _circleParam.yc, _circleParam.rad, _circleParam.style);
+
+            _circleParam.yc = -5;
+            _circleParam.style = 1;
+            Document2DAshtrayHole.ksCircle(_circleParam.xc, _circleParam.yc, _circleParam.rad, _circleParam.style);
+
+            ashtrayHoleSketchDefinition.EndEdit();
+            #endregion
+
+            #region Вырезание отверстий
+            ksEntity EntityCutExtrusionAshtrayHole = _part.NewEntity((short)KSConstants.o3d_cutExtrusion);
+            ksCutExtrusionDefinition cutExtrusionDefinitionAshtrayHole = EntityCutExtrusionAshtrayHole.GetDefinition();
+            cutExtrusionDefinitionAshtrayHole.cut = true;
+            cutExtrusionDefinitionAshtrayHole.directionType = dtReverse;
+            cutExtrusionDefinitionAshtrayHole.SetSideParam(true, etBlind, ashtrayThickness, 0, false);
+            cutExtrusionDefinitionAshtrayHole.SetSketch(ashtrayHoleSketchDefinition);
+            EntityCutExtrusionAshtrayHole.Create();
+            #endregion
+
+        }
+
         public RectangleUrnBuilder(KompasObject kompas)
         {
             _kompas = kompas;
@@ -118,10 +262,10 @@ namespace PluginForCAD_TrashcanLibrary
             EntityTopCut.Create();
             ksDocument2D Document2DTopCut = sketchTopCut.BeginEdit();
             _rectangleParam = _kompas.GetParamStruct((short)KSConstants.ko_RectangleParam);
-            _rectangleParam.x = parameters.LengthTop / 2 -parameters.WallThickness/2;
-            _rectangleParam.y = -(parameters.WidthTop / 2 - parameters.WallThickness/2);
-            _rectangleParam.height = parameters.LengthTop - parameters.WallThickness;
-            _rectangleParam.width = -(parameters.WidthTop - parameters.WallThickness);
+            _rectangleParam.x = parameters.LengthTop / 2 -parameters.WallThickness;
+            _rectangleParam.y = -(parameters.WidthTop / 2 - parameters.WallThickness);
+            _rectangleParam.height = parameters.LengthTop - parameters.WallThickness*2;
+            _rectangleParam.width = -(parameters.WidthTop - parameters.WallThickness*2);
             _rectangleParam.style = 1;
             Document2DTopCut.ksRectangle(_rectangleParam, 0);
             sketchTopCut.EndEdit();
@@ -134,10 +278,10 @@ namespace PluginForCAD_TrashcanLibrary
             EntityBotCut.Create();
             ksDocument2D Document2DBotCut = sketchBotCut.BeginEdit();
             _rectangleParam = _kompas.GetParamStruct((short)KSConstants.ko_RectangleParam);
-            _rectangleParam.x = parameters.LengthBottom / 2 - parameters.WallThickness / 2;
-            _rectangleParam.y = -(parameters.WidthBottom / 2 - parameters.WallThickness / 2);
-            _rectangleParam.height = parameters.LengthBottom - parameters.WallThickness;
-            _rectangleParam.width = -(parameters.WidthBottom - parameters.WallThickness);
+            _rectangleParam.x = parameters.LengthBottom / 2 - parameters.WallThickness ;
+            _rectangleParam.y = -(parameters.WidthBottom / 2 - parameters.WallThickness );
+            _rectangleParam.height = parameters.LengthBottom - parameters.WallThickness*2;
+            _rectangleParam.width = -(parameters.WidthBottom - parameters.WallThickness*2);
             _rectangleParam.style = 1;
             Document2DBotCut.ksRectangle(_rectangleParam, 0);
             sketchBotCut.EndEdit();
@@ -353,14 +497,14 @@ namespace PluginForCAD_TrashcanLibrary
                 _rectangleParam.ang = 0;
                 _rectangleParam.y = parameters.WidthBottom / 2 + 1 * 10;
                 _rectangleParam.x = parameters.WidthBottom / 2;
-                _rectangleParam.width = -2 * (parameters.WidthBottom / 2 + 1 * 10);
+                _rectangleParam.width = -2 * (parameters.WidthBottom / 2 );
                 _rectangleParam.height = 1 * 10;
                 _rectangleParam.style = 1;
                 Document2DStandStops.ksRectangle(_rectangleParam, 0);
                 _rectangleParam.ang = 0;
                 _rectangleParam.y = -(parameters.WidthBottom / 2 + 1 * 10);
                 _rectangleParam.x = -parameters.WidthBottom / 2;
-                _rectangleParam.width = 2 * (parameters.WidthBottom / 2 + 1 * 10);
+                _rectangleParam.width = 2 * (parameters.WidthBottom / 2);
                 _rectangleParam.height = -1 * 10;
                 _rectangleParam.style = 1;
                 Document2DStandStops.ksRectangle(_rectangleParam, 0);
@@ -437,6 +581,7 @@ namespace PluginForCAD_TrashcanLibrary
                 EntityBaseExtrusionBeam.Create();
                 #endregion
             }
+            AshtrayBuild(parameters);
         }
     }
 }

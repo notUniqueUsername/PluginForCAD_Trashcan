@@ -57,6 +57,36 @@ namespace PluginForCAD_TrashcanLibrary
         public double StandHeight { get; private set; }
 
         /// <summary>
+        /// Проверка листа параметров
+        /// </summary>
+        /// <param name="parameters"></param>
+        private void ValidateParamList(List<double> parameters)
+        {
+            if (Stand)
+            {
+                if (parameters.Count != 8)
+                {
+                    throw new ArgumentException("В листе параметров должно быть 8 значений");
+                }
+            }
+            else
+            {
+                if (parameters.Count != 7)
+                {
+                    throw new ArgumentException("В листе параметров должно быть 7 значений");
+                }
+            }
+
+            foreach (var parameter in parameters)
+            {
+                if (double.IsInfinity(parameter) || double.IsNaN(parameter))
+                {
+                    throw new ArgumentException("Параметры не должны быть NaN или infinity");
+                }
+            }
+        }
+
+        /// <summary>
         /// Проверка угла наклона
         /// </summary>
         /// <param name="top"></param>
@@ -82,12 +112,15 @@ namespace PluginForCAD_TrashcanLibrary
         /// Монструозный конструктор
         /// </summary>
         /// <param name="parameters">
-        /// Лист параметров
+        /// Лист параметров 0-толщина дна,1-тольщина стенок,2-высота урны,3-ширина нижнего основания,
+        /// 4-ширина верхнего основания,5-длина нижнего основания,6-длина верхнего основания
         /// </param>
         /// <param name="stand">Наличие стойки</param>
         public RectangleParameters(List<double> parameters, bool stand)
         {
             Stand = stand;
+
+            ValidateParamList(parameters);
 
             if (parameters[0] > 0 && parameters[0] <= 2)
             {
@@ -129,40 +162,40 @@ namespace PluginForCAD_TrashcanLibrary
             }
 
 
-            if (parameters[3] > 0 && parameters[3] <= 50)
+            if (parameters[3] > 0 && parameters[3] <= 50 && parameters[3] >= 20)
             {
                 WidthBottom = parameters[3] * 10;
             }
             else
             {
-                throw new ArgumentException("Ширина нижнего основания урны должна быть меньше 50");
+                throw new ArgumentException("Ширина нижнего основания урны должна быть меньше 50 и больше 20");
             }
 
-            if (parameters[4] > 0 && parameters[4] <= 50)
+            if (parameters[4] > 0 && parameters[4] <= 50 && parameters[4] >= 20)
             {
                 WidthTop = parameters[4] * 10;
             }
             else
             {
-                throw new ArgumentException("Ширина верхнего основания урны должна быть меньше 50");
+                throw new ArgumentException("Ширина верхнего основания урны должна быть меньше 50 и больше 20");
             }
 
-            if (parameters[5] > 0 && parameters[5] <= 50)
+            if (parameters[5] > 0 && parameters[5] <= 50 && parameters[5] >= 20)
             {
                 LengthBottom = parameters[5] * 10;
             }
             else
             {
-                throw new ArgumentException("Длина нижнего основания урны должна быть меньше 50");
+                throw new ArgumentException("Длина нижнего основания урны должна быть меньше 50 и больше 20");
             }
 
-            if (parameters[6] > 0 && parameters[6] <= 50)
+            if (parameters[6] > 0 && parameters[6] <= 50 && parameters[6] >= 20)
             {
                 LengthTop = parameters[6] * 10;
             }
             else
             {
-                throw new ArgumentException("Длина верхнего основания урны должна быть меньше 50");
+                throw new ArgumentException("Длина верхнего основания урны должна быть меньше 50 и больше 20");
             }
 
             if (Stand)

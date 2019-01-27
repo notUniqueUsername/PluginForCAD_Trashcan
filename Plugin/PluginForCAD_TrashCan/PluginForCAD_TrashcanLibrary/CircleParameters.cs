@@ -43,6 +43,36 @@ namespace PluginForCAD_TrashcanLibrary
         /// </summary>
         public double StandHeight { get; private set; }
 
+
+        /// <summary>
+        /// Проверка листа параметров
+        /// </summary>
+        /// <param name="parameters"></param>
+        private void ValidateParamList(List<double> parameters)
+        {
+            if (Stand)
+            {
+                if (parameters.Count != 6)
+                {
+                    throw new ArgumentException("В листе параметров должно быть 6 значений");
+                }
+            }
+            else
+            {
+                if (parameters.Count != 5)
+                {
+                    throw new ArgumentException("В листе параметров должно быть 5 значений");
+                }
+            }
+            foreach (var parameter in parameters)
+            {
+                if (double.IsInfinity(parameter) || double.IsNaN(parameter))
+                {
+                    throw new ArgumentException("Параметры не должны быть NaN или infinity");
+                }
+            }
+        }
+
         /// <summary>
         /// Проверка угла наклона
         /// </summary>
@@ -75,7 +105,7 @@ namespace PluginForCAD_TrashcanLibrary
         public CircleParameters(List<double> parameters, bool stand)
         {
             Stand = stand;
-            
+            ValidateParamList(parameters);
             if (parameters[0] > 0 && parameters[0] <= 2)
             {
                 BottomThickness = parameters[0] * 10;
@@ -116,22 +146,22 @@ namespace PluginForCAD_TrashcanLibrary
             }
 
 
-            if (parameters[3] > 0 && parameters[3] <= 25)
+            if (parameters[3] > 0 && parameters[3] <= 25 && parameters[3] >= 20)
             {
                 RadiusTop = parameters[3] * 10;
             }
             else
             {
-                throw new ArgumentException("Радиус верхнего основания урны должен быть меньше 25");
+                throw new ArgumentException("Радиус верхнего основания урны должен быть меньше 25 и больше 20");
             }
 
-            if (parameters[4] > 0 && parameters[4] <= 25)
+            if (parameters[4] > 0 && parameters[4] <= 25 && parameters[4] >= 20)
             {
                 RadiusBottom = parameters[4] * 10;
             }
             else
             {
-                throw new ArgumentException("Радиус нижнего основания урны должен быть меньше 25");
+                throw new ArgumentException("Радиус нижнего основания урны должен быть меньше 25 и больше 20");
             }
 
             if (Stand)

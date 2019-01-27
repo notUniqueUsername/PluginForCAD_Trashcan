@@ -49,33 +49,30 @@ namespace PluginForCAD_TrashCanUnitTests
         }
 
         [Test]
-        [TestCase(2, 1, 35, 20, 20, 40, false,
+        [TestCase(2, 1, 35, 20, 20, false,
             TestName = "Тест конструктора корректными значениями")]
-        [TestCase(2, 1, 40, 25, 25, 60, false,
+        [TestCase(2, 1, 40, 25, 25, false,
             TestName = "Тест конструктора корректными максимальными значениями")]
-        [TestCase(2, 1, 30, 20, 20, 40, false,
+        [TestCase(2, 1, 30, 20, 20, false,
             TestName = "Тест конструктора корректными минимальными значениями")]
-        public void TestNameSet_CorrectValue(double bottomThickness, double wallThickness, double urnHeight, double bottomRadius, double topRadius, double standHeight, bool stand)
+        public void TestNameSet_CorrectValue(double bottomThickness, double wallThickness, double urnHeight, double bottomRadius, double topRadius, bool stand)
         {
             _parametersList.Add(bottomThickness);
             _parametersList.Add(wallThickness);
             _parametersList.Add(urnHeight);
             _parametersList.Add(bottomRadius);
             _parametersList.Add(topRadius);
-            _parametersList.Add(standHeight);
             var expectedBottomThickness = bottomThickness * 10;
             var expectedWallThickness = wallThickness * 10;
             var expectedUrnHeight = urnHeight * 10;
             var expectedBottomRadius = bottomRadius * 10;
             var expectedTopRadius = topRadius * 10;
-            var expectedStandHeight = 0;
             _circleParameters = new CircleParameters(_parametersList, stand);
             Assert.AreEqual(expectedBottomThickness, _circleParameters.BottomThickness);
             Assert.AreEqual(expectedWallThickness, _circleParameters.WallThickness);
             Assert.AreEqual(expectedUrnHeight, _circleParameters.UrnHeight);
             Assert.AreEqual(expectedBottomRadius, _circleParameters.RadiusBottom);
             Assert.AreEqual(expectedTopRadius, _circleParameters.RadiusTop);
-            Assert.AreEqual(expectedStandHeight, _circleParameters.StandHeight);
             Assert.AreEqual(stand, _circleParameters.Stand);
         }
 

@@ -58,15 +58,15 @@ namespace PluginForCAD_TrashCanUnitTests
         }
 
         [Test]
-        [TestCase(2, 1, 35, 20, 25, 20, 25, 45, false,
+        [TestCase(2, 1, 35, 20, 25, 20, 25, false,
             TestName = "Тест конструктора корректными значениями")]
-        [TestCase(2, 1, 40, 50, 50, 50, 50, 60, false,
+        [TestCase(2, 1, 40, 50, 50, 50, 50, false,
             TestName = "Тест конструктора корректными максимальными значениями")]
-        [TestCase(2, 1, 30, 20, 20, 20, 20, 40, false,
+        [TestCase(2, 1, 30, 20, 20, 20, 20, false,
             TestName = "Тест конструктора корректными минимальными значениями")]
         public void TestNameSet_CorrectValue(double bottomThickness, double wallThickness,
             double urnHeight, double topWidth, double bottomWidth, double topLength,
-            double bottomLength, double standHeight, bool stand)
+            double bottomLength, bool stand)
         {
             _parametersList.Add(bottomThickness);
             _parametersList.Add(wallThickness);
@@ -75,7 +75,6 @@ namespace PluginForCAD_TrashCanUnitTests
             _parametersList.Add(topWidth);
             _parametersList.Add(bottomLength);
             _parametersList.Add(topLength);
-            _parametersList.Add(standHeight);
             var expectedBottomThickness = bottomThickness * 10;
             var expectedWallThickness = wallThickness * 10;
             var expectedUrnHeight = urnHeight * 10;
@@ -83,7 +82,6 @@ namespace PluginForCAD_TrashCanUnitTests
             var expectedBotomWidth = bottomWidth * 10;
             var expectedTopLength = topLength * 10;
             var expectedBottomLength = bottomLength * 10;
-            var expectedStandHeight = 0;
             _rectangleParameters = new RectangleParameters(_parametersList, stand);
             Assert.AreEqual(expectedBottomThickness, _rectangleParameters.BottomThickness);
             Assert.AreEqual(expectedWallThickness, _rectangleParameters.WallThickness);
@@ -92,7 +90,6 @@ namespace PluginForCAD_TrashCanUnitTests
             Assert.AreEqual(expectedBotomWidth, _rectangleParameters.WidthBottom);
             Assert.AreEqual(expectedTopLength, _rectangleParameters.LengthTop);
             Assert.AreEqual(expectedBottomLength, _rectangleParameters.LengthBottom);
-            Assert.AreEqual(expectedStandHeight, _rectangleParameters.StandHeight);
             Assert.AreEqual(stand, _rectangleParameters.Stand);
         }
 
