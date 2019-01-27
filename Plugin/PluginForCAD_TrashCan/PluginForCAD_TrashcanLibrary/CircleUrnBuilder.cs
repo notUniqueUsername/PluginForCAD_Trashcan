@@ -583,7 +583,10 @@ namespace PluginForCAD_TrashcanLibrary
 
             }
 
-            AshtrayBuild(parameters);
+            if (parameters.Ashtray)
+            {
+                AshtrayBuild(parameters);
+            }
         }
     }
 }

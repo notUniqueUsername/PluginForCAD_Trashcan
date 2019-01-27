@@ -55,6 +55,7 @@
             this.ExitButton = new System.Windows.Forms.Button();
             this.StandCheckBox = new System.Windows.Forms.CheckBox();
             this.TestButton = new System.Windows.Forms.Button();
+            this.AshtrayCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -338,11 +339,26 @@
             this.TestButton.UseVisualStyleBackColor = true;
             this.TestButton.Click += new System.EventHandler(this.TestButton_Click);
             // 
+            // AshtrayCheckBox
+            // 
+            this.AshtrayCheckBox.AutoSize = true;
+            this.AshtrayCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.AshtrayCheckBox.Checked = true;
+            this.AshtrayCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AshtrayCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.AshtrayCheckBox.Location = new System.Drawing.Point(12, 457);
+            this.AshtrayCheckBox.Name = "AshtrayCheckBox";
+            this.AshtrayCheckBox.Size = new System.Drawing.Size(139, 28);
+            this.AshtrayCheckBox.TabIndex = 29;
+            this.AshtrayCheckBox.Text = "Пепельница";
+            this.AshtrayCheckBox.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(391, 538);
+            this.Controls.Add(this.AshtrayCheckBox);
             this.Controls.Add(this.TestButton);
             this.Controls.Add(this.StandCheckBox);
             this.Controls.Add(this.ExitButton);
@@ -408,6 +424,7 @@
         private System.Windows.Forms.Button ExitButton;
         private System.Windows.Forms.CheckBox StandCheckBox;
         private System.Windows.Forms.Button TestButton;
+        private System.Windows.Forms.CheckBox AshtrayCheckBox;
     }
 }
 

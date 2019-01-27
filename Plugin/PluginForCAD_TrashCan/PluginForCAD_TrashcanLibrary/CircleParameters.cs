@@ -39,6 +39,11 @@ namespace PluginForCAD_TrashcanLibrary
         public bool Stand { get; private set; }
 
         /// <summary>
+        /// Наличие стойки
+        /// </summary>
+        public bool Ashtray { get; private set; }
+
+        /// <summary>
         /// Высота стойки
         /// </summary>
         public double StandHeight { get; private set; }
@@ -102,9 +107,10 @@ namespace PluginForCAD_TrashcanLibrary
         /// Лист параметров
         /// </param>
         /// <param name="stand">Наличие стойки</param>
-        public CircleParameters(List<double> parameters, bool stand)
+        public CircleParameters(List<double> parameters, bool stand, bool ashtray)
         {
             Stand = stand;
+            Ashtray = ashtray;
             ValidateParamList(parameters);
             if (parameters[0] > 0 && parameters[0] <= 2)
             {

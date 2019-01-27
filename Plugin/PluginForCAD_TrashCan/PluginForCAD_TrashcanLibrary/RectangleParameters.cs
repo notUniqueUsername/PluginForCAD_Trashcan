@@ -52,6 +52,11 @@ namespace PluginForCAD_TrashcanLibrary
         public bool Stand { get; private set; }
 
         /// <summary>
+        /// Наличие стойки
+        /// </summary>
+        public bool Ashtray { get; private set; }
+
+        /// <summary>
         /// Высота стойки
         /// </summary>
         public double StandHeight { get; private set; }
@@ -116,10 +121,10 @@ namespace PluginForCAD_TrashcanLibrary
         /// 4-ширина верхнего основания,5-длина нижнего основания,6-длина верхнего основания
         /// </param>
         /// <param name="stand">Наличие стойки</param>
-        public RectangleParameters(List<double> parameters, bool stand)
+        public RectangleParameters(List<double> parameters, bool stand, bool ashtray)
         {
             Stand = stand;
-
+            Ashtray = ashtray;
             ValidateParamList(parameters);
 
             if (parameters[0] > 0 && parameters[0] <= 2)

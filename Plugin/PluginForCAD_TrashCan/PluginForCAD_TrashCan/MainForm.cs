@@ -128,12 +128,12 @@ namespace PluginForCAD_TrashCanUI
                 switch (_urnForms)
                 {
                     case UrnForms.Circle:
-                        _parametersCircle = new CircleParameters(parametersList, StandCheckBox.Checked);
+                        _parametersCircle = new CircleParameters(parametersList, StandCheckBox.Checked, AshtrayCheckBox.Checked);
                         var circleBuilder = new CircleUrnBuilder(_kompasObject.KompasObject);
                         circleBuilder.Build(_parametersCircle);
                         break;
                     case UrnForms.Rectangle:
-                        _parameters = new RectangleParameters(parametersList,StandCheckBox.Checked);
+                        _parameters = new RectangleParameters(parametersList,StandCheckBox.Checked, AshtrayCheckBox.Checked);
                         var rectangleBuilder = new RectangleUrnBuilder(_kompasObject.KompasObject);
                         rectangleBuilder.Build(_parameters);
                         break;
@@ -150,6 +150,11 @@ namespace PluginForCAD_TrashCanUI
             catch (NullReferenceException)
             {
                 MessageBox.Show("Сперва нужно запустить компас", "Что-то пошло не так", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (System.Runtime.InteropServices.COMException)
+            {
+                _kompasObject.CloseKompas();
+                MessageBox.Show("Компас был закрыт не через приложение, откройте компас заново", "Что-то пошло не так", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
 

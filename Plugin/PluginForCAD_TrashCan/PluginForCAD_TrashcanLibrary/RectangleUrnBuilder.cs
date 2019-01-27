@@ -394,7 +394,7 @@ namespace PluginForCAD_TrashcanLibrary
                 double offset = 0;
                 if (Math.Abs(parameters.WidthBottom / 2 - parameters.WidthTop / 2) == 0)
                 {
-                    offset = 10;
+                    offset = 15;
                 }
                 ksEntity EntityStandBracing = _part.NewEntity((short)KSConstants.o3d_sketch);
                 ksSketchDefinition sketchStandBracing = EntityStandBracing.GetDefinition();
@@ -581,7 +581,11 @@ namespace PluginForCAD_TrashcanLibrary
                 EntityBaseExtrusionBeam.Create();
                 #endregion
             }
-            AshtrayBuild(parameters);
+            if (parameters.Ashtray)
+            {
+                AshtrayBuild(parameters);
+            }
+
         }
     }
 }
