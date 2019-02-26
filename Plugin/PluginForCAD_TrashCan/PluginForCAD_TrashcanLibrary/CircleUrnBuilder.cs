@@ -201,14 +201,292 @@ namespace PluginForCAD_TrashcanLibrary
         }
 
         /// <summary>
-        /// Строим урну
+        /// Строим стойку
         /// </summary>
         /// <param name="parameters"></param>
-        public void Build(CircleParameters parameters)
+        private void StandBuild(CircleParameters parameters)
         {
-            _doc3D = _kompas.Document3D();
-            _doc3D.Create(false, true);
-            
+            #region Смещеная плоскость для отверстий
+            _part = _doc3D.GetPart((short)KSConstants.pTop_part);
+            ksEntity entityDisplacedPlaneHoles = _part.GetDefaultEntity((short)KSConstants.o3d_planeXOZ);
+
+            ksEntity displacedPlaneHoles = _part.NewEntity((short)KSConstants.o3d_planeOffset);
+            ksPlaneOffsetDefinition planeOffsetDefinitionHoles = displacedPlaneHoles.GetDefinition();
+            planeOffsetDefinitionHoles.direction = true;
+            planeOffsetDefinitionHoles.offset = parameters.RadiusBottom + 2 * 10;
+            planeOffsetDefinitionHoles.SetPlane(entityDisplacedPlaneHoles);
+            displacedPlaneHoles.Create();
+            #endregion
+
+            #region Эскиз для отверстия
+            ksEntity entityHoles = _part.NewEntity((short)KSConstants.o3d_sketch);
+            ksSketchDefinition sketchHoles = entityHoles.GetDefinition();
+            sketchHoles.SetPlane(displacedPlaneHoles);
+            entityHoles.Create();
+            ksDocument2D document2DHoles = sketchHoles.BeginEdit();
+            _circleParam = _kompas.GetParamStruct((short)KSConstants.ko_CircleParam);
+            _circleParam.xc = 0;
+            _circleParam.yc = -10 * 10;
+            _circleParam.rad = 2.5 * 10;
+            _circleParam.style = 1;
+            document2DHoles.ksCircle(_circleParam.xc, _circleParam.yc, _circleParam.rad, _circleParam.style);
+            sketchHoles.EndEdit();
+            #endregion
+
+            #region Отверстия
+            const short etBlind = 0;
+            const short dtNormal = 0;
+            ksEntity entityCutExtrusion = _part.NewEntity((short)KSConstants.o3d_cutExtrusion);
+            ksCutExtrusionDefinition cutExtrusionDefinition = entityCutExtrusion.GetDefinition();
+            cutExtrusionDefinition.cut = true;
+            cutExtrusionDefinition.directionType = dtNormal;
+            cutExtrusionDefinition.SetSideParam(true, etBlind, parameters.RadiusBottom * 4, 0, false);
+            cutExtrusionDefinition.SetSketch(sketchHoles);
+            entityCutExtrusion.Create();
+            #endregion
+
+            #region Смещеная плоскость для упоров ножек стойки
+            _part = _doc3D.GetPart((short)KSConstants.pTop_part);
+            ksEntity entityDisplacedStandStops = _part.GetDefaultEntity((short)KSConstants.o3d_planeXOY);
+            ksEntity displacedPlaneStandStops = _part.NewEntity((short)KSConstants.o3d_planeOffset);
+            ksPlaneOffsetDefinition planeOffsetDefinitionStandStops = displacedPlaneStandStops.GetDefinition();
+            planeOffsetDefinitionStandStops.direction = true;
+            planeOffsetDefinitionStandStops.offset = parameters.StandHeight;
+            planeOffsetDefinitionStandStops.SetPlane(entityDisplacedStandStops);
+            displacedPlaneStandStops.Create();
+            #endregion
+
+            #region Смещеная плоcкость для перекладины стойки
+            _part = _doc3D.GetPart((short)KSConstants.pTop_part);
+            ksEntity entityDisplacedStandBeam = _part.GetDefaultEntity((short)KSConstants.o3d_planeXOY);
+
+            ksEntity displacedPlaneStandBeam = _part.NewEntity((short)KSConstants.o3d_planeOffset);
+            ksPlaneOffsetDefinition planeOffsetDefinitionStandBeam = displacedPlaneStandBeam.GetDefinition();
+            planeOffsetDefinitionStandBeam.direction = true;
+            planeOffsetDefinitionStandBeam.offset = parameters.StandHeight - 5 * 10;
+            planeOffsetDefinitionStandBeam.SetPlane(entityDisplacedStandBeam);
+            displacedPlaneStandBeam.Create();
+            #endregion
+
+            #region смещеная плоскость для ножек стойки
+            _part = _doc3D.GetPart((short)KSConstants.pTop_part);
+            ksEntity entityDisplacedStandLeg = _part.GetDefaultEntity((short)KSConstants.o3d_planeXOY);
+
+            ksEntity displacedPlaneStandLeg = _part.NewEntity((short)KSConstants.o3d_planeOffset);
+            ksPlaneOffsetDefinition planeOffsetDefinitionStandLeg = displacedPlaneStandLeg.GetDefinition();
+            planeOffsetDefinitionStandLeg.direction = true;
+            planeOffsetDefinitionStandLeg.offset = parameters.StandHeight - 1 * 10;
+            planeOffsetDefinitionStandLeg.SetPlane(entityDisplacedStandLeg);
+            displacedPlaneStandLeg.Create();
+            #endregion
+
+            #region смещеная плоскость для крепления ножек стойки
+            _part = _doc3D.GetPart((short)KSConstants.pTop_part);
+            ksEntity entityDisplacedStandBracingLeft = _part.GetDefaultEntity((short)KSConstants.o3d_planeXOY);
+
+            ksEntity displacedPlaneStandBracingLeft = _part.NewEntity((short)KSConstants.o3d_planeOffset);
+            ksPlaneOffsetDefinition planeOffsetDefinitionStandBracingLeft = displacedPlaneStandBracingLeft.GetDefinition();
+            planeOffsetDefinitionStandBracingLeft.direction = true;
+            planeOffsetDefinitionStandBracingLeft.offset = 10 * 10;
+            planeOffsetDefinitionStandBracingLeft.SetPlane(entityDisplacedStandBracingLeft);
+            displacedPlaneStandBracingLeft.Create();
+            #endregion
+
+            #region эскиз для крепления ножек стойки
+            double offset = 0;
+            if (Math.Abs(parameters.RadiusBottom - parameters.RadiusTop) == 0)
+            {
+                offset = 20;
+            }
+            ksEntity entityStandBracing = _part.NewEntity((short)KSConstants.o3d_sketch);
+            ksSketchDefinition sketchStandBracing = entityStandBracing.GetDefinition();
+            sketchStandBracing.SetPlane(displacedPlaneStandBracingLeft);
+            entityStandBracing.Create();
+            ksDocument2D document2DStandBracing = sketchStandBracing.BeginEdit();
+            _lineParam = _kompas.GetParamStruct((short)KSConstants.ko_LineSegParam);
+            _lineParam.x1 = 0;
+            _lineParam.x2 = 0.5 * 10;
+            _lineParam.y1 = parameters.RadiusBottom + 1 * 10;
+            _lineParam.y2 = parameters.RadiusBottom + 1 * 10;
+            _lineParam.style = 1;
+            document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
+            _lineParam.x1 = 0.5 * 10;
+            _lineParam.x2 = 0.5 * 10;
+            _lineParam.y1 = parameters.RadiusBottom + 1 * 10;
+            _lineParam.y2 = parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop);
+            _lineParam.style = 1;
+            document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
+            _lineParam.x1 = 0.5 * 10;
+            _lineParam.x2 = 3.5 * 10;
+            _lineParam.y1 = parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop);
+            _lineParam.y2 = parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop);
+            _lineParam.style = 1;
+            document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
+            _lineParam.x1 = 3.5 * 10;
+            _lineParam.x2 = 3.5 * 10;
+            _lineParam.y1 = parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop);
+            _lineParam.y2 = parameters.RadiusBottom - (offset + 10) - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop);
+            _lineParam.style = 1;
+            document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
+            _lineParam.x1 = 3.5 * 10;
+            _lineParam.x2 = 0.5 * 10;
+            _lineParam.y1 = parameters.RadiusBottom - (offset + 10) - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop);
+            _lineParam.y2 = parameters.RadiusBottom - (offset + 10) - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop);
+            _lineParam.style = 1;
+            document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
+
+            //правая
+            _lineParam.x1 = 0;
+            _lineParam.x2 = 0.5 * 10;
+            _lineParam.y1 = -(parameters.RadiusBottom + 1 * 10);
+            _lineParam.y2 = -(parameters.RadiusBottom + 1 * 10);
+            _lineParam.style = 1;
+            document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
+            _lineParam.x1 = 0.5 * 10;
+            _lineParam.x2 = 0.5 * 10;
+            _lineParam.y1 = -(parameters.RadiusBottom + 1 * 10);
+            _lineParam.y2 = -(parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop));
+            _lineParam.style = 1;
+            document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
+            _lineParam.x1 = 0.5 * 10;
+            _lineParam.x2 = 3.5 * 10;
+            _lineParam.y1 = -(parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop));
+            _lineParam.y2 = -(parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop));
+            _lineParam.style = 1;
+            document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
+            _lineParam.x1 = 3.5 * 10;
+            _lineParam.x2 = 3.5 * 10;
+            _lineParam.y1 = -(parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop));
+            _lineParam.y2 = -(parameters.RadiusBottom - (offset + 10) - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop));
+            _lineParam.style = 1;
+            document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
+            _lineParam.x1 = 3.5 * 10;
+            _lineParam.x2 = 0.5 * 10;
+            _lineParam.y1 = -(parameters.RadiusBottom - (offset + 10) - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop));
+            _lineParam.y2 = -(parameters.RadiusBottom - (offset + 10) - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop));
+            _lineParam.style = 1;
+            document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
+            //ось 
+            ksAxisLineParam axisLineParam = _kompas.GetParamStruct((short)KSConstants.ko_AxisLineParam);
+            ksMathPointParam begpoint = axisLineParam.GetBegPoint();
+            ksMathPointParam endpoint = axisLineParam.GetEndPoint();
+            begpoint.x = 0;
+            begpoint.y = 0;
+            endpoint.x = 0;
+            endpoint.y = 4 * 10;
+            document2DStandBracing.ksAxisLine(axisLineParam);
+
+            sketchStandBracing.EndEdit();
+            #endregion
+
+            #region Выдаыливание вращением упоров ножек стойки
+            ksEntity entityRotateExtrusion = _part.NewEntity((short)KSConstants.o3d_baseRotated);
+            ksBaseRotatedDefinition rotatedDefinition = entityRotateExtrusion.GetDefinition();
+            rotatedDefinition.directionType = dtNormal;
+            rotatedDefinition.toroidShapeType = false;
+            rotatedDefinition.SetSideParam(true, 360);
+            rotatedDefinition.SetSketch(sketchStandBracing);
+            entityRotateExtrusion.Create();
+            #endregion
+
+            #region эскиз для упоров ножек стойки
+            ksEntity entitStandStops = _part.NewEntity((short)KSConstants.o3d_sketch);
+            ksSketchDefinition sketchStandStops = entitStandStops.GetDefinition();
+            sketchStandStops.SetPlane(displacedPlaneStandStops);
+            entitStandStops.Create();
+            ksDocument2D document2DStandStops = sketchStandStops.BeginEdit();
+            _rectangleParam = _kompas.GetParamStruct((short)KSConstants.ko_RectangleParam);
+            _rectangleParam.ang = 0;
+            _rectangleParam.y = parameters.RadiusBottom + 1 * 10;
+            _rectangleParam.x = parameters.RadiusBottom;
+            _rectangleParam.width = -2 * (parameters.RadiusBottom + 1 * 10);
+            _rectangleParam.height = 1 * 10;
+            _rectangleParam.style = 1;
+            document2DStandStops.ksRectangle(_rectangleParam, 0);
+            _rectangleParam.ang = 0;
+            _rectangleParam.y = -(parameters.RadiusBottom + 1 * 10);
+            _rectangleParam.x = -parameters.RadiusBottom;
+            _rectangleParam.width = 2 * (parameters.RadiusBottom + 1 * 10);
+            _rectangleParam.height = -1 * 10;
+            _rectangleParam.style = 1;
+            document2DStandStops.ksRectangle(_rectangleParam, 0);
+
+            sketchStandStops.EndEdit();
+            #endregion
+
+            #region Выдавливание  упоров
+            ksEntity entityBaseExtrusion = _part.NewEntity((short)KSConstants.o3d_bossExtrusion);
+            ksBossExtrusionDefinition extrusionDefinition = entityBaseExtrusion.GetDefinition();
+            extrusionDefinition.directionType = 1;
+            extrusionDefinition.SetSideParam(false, etBlind, 1 * 10, 0, false);
+            extrusionDefinition.SetSketch(sketchStandStops);
+            entityBaseExtrusion.Create();
+            #endregion
+
+            #region эскиз для ножек
+            ksEntity entitStandLeg = _part.NewEntity((short)KSConstants.o3d_sketch);
+            ksSketchDefinition sketchStandLeg = entitStandLeg.GetDefinition();
+            sketchStandLeg.SetPlane(displacedPlaneStandLeg);
+            entitStandLeg.Create();
+            ksDocument2D document2DStandLeg = sketchStandLeg.BeginEdit();
+            _rectangleParam = _kompas.GetParamStruct((short)KSConstants.ko_RectangleParam);
+            _rectangleParam.ang = 0;
+            _rectangleParam.y = parameters.RadiusBottom + 1 * 10;
+            _rectangleParam.x = 0.5 * 10;
+            _rectangleParam.width = -1 * 10;
+            _rectangleParam.height = 1 * 10;
+            _rectangleParam.style = 1;
+            document2DStandLeg.ksRectangle(_rectangleParam, 0);
+            _rectangleParam.ang = 0;
+            _rectangleParam.y = -(parameters.RadiusBottom + 1 * 10);
+            _rectangleParam.x = -0.5 * 10;
+            _rectangleParam.width = 1 * 10;
+            _rectangleParam.height = -1 * 10;
+            _rectangleParam.style = 1;
+            document2DStandLeg.ksRectangle(_rectangleParam, 0);
+
+            sketchStandLeg.EndEdit();
+            #endregion
+
+            #region Выдавливание  ножек
+            ksEntity entityBaseExtrusionLeg = _part.NewEntity((short)KSConstants.o3d_bossExtrusion);
+            ksBossExtrusionDefinition extrusionDefinitionLeg = entityBaseExtrusionLeg.GetDefinition();
+            extrusionDefinitionLeg.directionType = 1;
+            extrusionDefinitionLeg.SetSideParam(false, etBlind, parameters.StandHeight - 1 * 10, 0, false);
+            extrusionDefinitionLeg.SetSketch(sketchStandLeg);
+            entityBaseExtrusionLeg.Create();
+            #endregion
+
+            #region эскиз перекладины
+            ksEntity entitStandBeam = _part.NewEntity((short)KSConstants.o3d_sketch);
+            ksSketchDefinition sketchStandBeam = entitStandBeam.GetDefinition();
+            sketchStandBeam.SetPlane(displacedPlaneStandBeam);
+            entitStandBeam.Create();
+            ksDocument2D document2DStandBeam = sketchStandBeam.BeginEdit();
+            _rectangleParam = _kompas.GetParamStruct((short)KSConstants.ko_RectangleParam);
+            _rectangleParam.ang = 0;
+            _rectangleParam.y = parameters.RadiusBottom + 1 * 10;
+            _rectangleParam.x = -0.5 * 10;
+            _rectangleParam.height = -2 * (parameters.RadiusBottom + 1 * 10);
+            _rectangleParam.width = 1 * 10;
+            _rectangleParam.style = 1;
+            document2DStandBeam.ksRectangle(_rectangleParam, 0);
+
+            sketchStandBeam.EndEdit();
+            #endregion
+
+            #region Выдавливание  перекладины
+            ksEntity entityBaseExtrusionBeam = _part.NewEntity((short)KSConstants.o3d_bossExtrusion);
+            ksBossExtrusionDefinition extrusionDefinitionBeam = entityBaseExtrusionBeam.GetDefinition();
+            extrusionDefinitionBeam.SetSideParam(true, etBlind, 1 * 10, 0, false);
+            extrusionDefinitionBeam.SetSketch(sketchStandBeam);
+            entityBaseExtrusionBeam.Create();
+            #endregion
+
+        }
+
+        private void UrnBuild(CircleParameters parameters)
+        {
             #region Эскиз нижненго основания
 
             _part = _doc3D.GetPart((short)KSConstants.pTop_part);
@@ -332,289 +610,22 @@ namespace PluginForCAD_TrashcanLibrary
             entityCollectionCut.Add(sketchTopCut);
             entityCutLoft.Create();
             #endregion
+        }
 
-
+        /// <summary>
+        /// Строим
+        /// </summary>
+        /// <param name="parameters"></param>
+        public void Build(CircleParameters parameters)
+        {
+            _doc3D = _kompas.Document3D();
+            _doc3D.Create(false, true);
+            UrnBuild(parameters);
 
             //Если есть стойка
             if (parameters.Stand)
             {
-                #region Смещеная плоскость для отверстий
-                _part = _doc3D.GetPart((short)KSConstants.pTop_part);
-                ksEntity entityDisplacedPlaneHoles = _part.GetDefaultEntity((short)KSConstants.o3d_planeXOZ);
-
-                ksEntity displacedPlaneHoles = _part.NewEntity((short)KSConstants.o3d_planeOffset);
-                ksPlaneOffsetDefinition planeOffsetDefinitionHoles = displacedPlaneHoles.GetDefinition();
-                planeOffsetDefinitionHoles.direction = true;
-                planeOffsetDefinitionHoles.offset = parameters.RadiusBottom + 2 * 10;
-                planeOffsetDefinitionHoles.SetPlane(entityDisplacedPlaneHoles);
-                displacedPlaneHoles.Create();
-                #endregion
-
-                #region Эскиз для отверстия
-                ksEntity entityHoles = _part.NewEntity((short)KSConstants.o3d_sketch);
-                ksSketchDefinition sketchHoles = entityHoles.GetDefinition();
-                sketchHoles.SetPlane(displacedPlaneHoles);
-                entityHoles.Create();
-                ksDocument2D document2DHoles = sketchHoles.BeginEdit();
-                _circleParam = _kompas.GetParamStruct((short)KSConstants.ko_CircleParam);
-                _circleParam.xc = 0;
-                _circleParam.yc = -10 * 10;
-                _circleParam.rad = 2.5 * 10;
-                _circleParam.style = 1;
-                document2DHoles.ksCircle(_circleParam.xc, _circleParam.yc, _circleParam.rad, _circleParam.style);
-                sketchHoles.EndEdit();
-                #endregion
-
-                #region Отверстия
-                const short etBlind = 0;
-                const short dtNormal = 0;
-                ksEntity entityCutExtrusion = _part.NewEntity((short)KSConstants.o3d_cutExtrusion);
-                ksCutExtrusionDefinition cutExtrusionDefinition = entityCutExtrusion.GetDefinition();
-                cutExtrusionDefinition.cut = true;
-                cutExtrusionDefinition.directionType = dtNormal;
-                cutExtrusionDefinition.SetSideParam(true, etBlind, parameters.RadiusBottom * 4, 0, false);
-                cutExtrusionDefinition.SetSketch(sketchHoles);
-                entityCutExtrusion.Create();
-                #endregion
-
-                #region Смещеная плоскость для упоров ножек стойки
-                _part = _doc3D.GetPart((short)KSConstants.pTop_part);
-                ksEntity entityDisplacedStandStops = _part.GetDefaultEntity((short)KSConstants.o3d_planeXOY);
-                ksEntity displacedPlaneStandStops = _part.NewEntity((short)KSConstants.o3d_planeOffset);
-                ksPlaneOffsetDefinition planeOffsetDefinitionStandStops = displacedPlaneStandStops.GetDefinition();
-                planeOffsetDefinitionStandStops.direction = true;
-                planeOffsetDefinitionStandStops.offset = parameters.StandHeight;
-                planeOffsetDefinitionStandStops.SetPlane(entityDisplacedStandStops);
-                displacedPlaneStandStops.Create();
-                #endregion
-
-                #region Смещеная плоcкость для перекладины стойки
-                _part = _doc3D.GetPart((short)KSConstants.pTop_part);
-                ksEntity entityDisplacedStandBeam = _part.GetDefaultEntity((short)KSConstants.o3d_planeXOY);
-
-                ksEntity displacedPlaneStandBeam = _part.NewEntity((short)KSConstants.o3d_planeOffset);
-                ksPlaneOffsetDefinition planeOffsetDefinitionStandBeam = displacedPlaneStandBeam.GetDefinition();
-                planeOffsetDefinitionStandBeam.direction = true;
-                planeOffsetDefinitionStandBeam.offset = parameters.StandHeight - 5 * 10;
-                planeOffsetDefinitionStandBeam.SetPlane(entityDisplacedStandBeam);
-                displacedPlaneStandBeam.Create();
-                #endregion
-
-                #region смещеная плоскость для ножек стойки
-                _part = _doc3D.GetPart((short)KSConstants.pTop_part);
-                ksEntity entityDisplacedStandLeg = _part.GetDefaultEntity((short)KSConstants.o3d_planeXOY);
-
-                ksEntity displacedPlaneStandLeg = _part.NewEntity((short)KSConstants.o3d_planeOffset);
-                ksPlaneOffsetDefinition planeOffsetDefinitionStandLeg = displacedPlaneStandLeg.GetDefinition();
-                planeOffsetDefinitionStandLeg.direction = true;
-                planeOffsetDefinitionStandLeg.offset = parameters.StandHeight - 1 * 10;
-                planeOffsetDefinitionStandLeg.SetPlane(entityDisplacedStandLeg);
-                displacedPlaneStandLeg.Create();
-                #endregion
-
-                #region смещеная плоскость для крепления ножек стойки
-                _part = _doc3D.GetPart((short)KSConstants.pTop_part);
-                ksEntity entityDisplacedStandBracingLeft = _part.GetDefaultEntity((short)KSConstants.o3d_planeXOY);
-
-                ksEntity displacedPlaneStandBracingLeft = _part.NewEntity((short)KSConstants.o3d_planeOffset);
-                ksPlaneOffsetDefinition planeOffsetDefinitionStandBracingLeft = displacedPlaneStandBracingLeft.GetDefinition();
-                planeOffsetDefinitionStandBracingLeft.direction = true;
-                planeOffsetDefinitionStandBracingLeft.offset = 10 * 10;
-                planeOffsetDefinitionStandBracingLeft.SetPlane(entityDisplacedStandBracingLeft);
-                displacedPlaneStandBracingLeft.Create();
-                #endregion
-
-                #region эскиз для крепления ножек стойки
-                double offset = 0;
-                if (Math.Abs(parameters.RadiusBottom - parameters.RadiusTop) == 0)
-                {
-                    offset = 20;
-                }
-                ksEntity entityStandBracing = _part.NewEntity((short)KSConstants.o3d_sketch);
-                ksSketchDefinition sketchStandBracing = entityStandBracing.GetDefinition();
-                sketchStandBracing.SetPlane(displacedPlaneStandBracingLeft);
-                entityStandBracing.Create();
-                ksDocument2D document2DStandBracing = sketchStandBracing.BeginEdit();
-                _lineParam = _kompas.GetParamStruct((short)KSConstants.ko_LineSegParam);
-                _lineParam.x1 = 0;
-                _lineParam.x2 = 0.5 * 10;
-                _lineParam.y1 = parameters.RadiusBottom + 1 * 10;
-                _lineParam.y2 = parameters.RadiusBottom + 1 * 10;
-                _lineParam.style = 1;
-                document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
-                _lineParam.x1 = 0.5 * 10;
-                _lineParam.x2 = 0.5 * 10;
-                _lineParam.y1 = parameters.RadiusBottom + 1 * 10;
-                _lineParam.y2 = parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop);
-                _lineParam.style = 1;
-                document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
-                _lineParam.x1 = 0.5 * 10;
-                _lineParam.x2 = 3.5 * 10;
-                _lineParam.y1 = parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop);
-                _lineParam.y2 = parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop);
-                _lineParam.style = 1;
-                document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
-                _lineParam.x1 = 3.5 * 10;
-                _lineParam.x2 = 3.5 * 10;
-                _lineParam.y1 = parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop);
-                _lineParam.y2 = parameters.RadiusBottom - (offset+10) - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop);
-                _lineParam.style = 1;
-                document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
-                _lineParam.x1 = 3.5 * 10;
-                _lineParam.x2 = 0.5 * 10;
-                _lineParam.y1 = parameters.RadiusBottom -(offset+10) - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop);
-                _lineParam.y2 = parameters.RadiusBottom -(offset+10) - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop);
-                _lineParam.style = 1;
-                document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
-
-                //правая
-                _lineParam.x1 = 0;
-                _lineParam.x2 = 0.5 * 10;
-                _lineParam.y1 = -(parameters.RadiusBottom + 1 * 10);
-                _lineParam.y2 = -(parameters.RadiusBottom + 1 * 10);
-                _lineParam.style = 1;
-                document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
-                _lineParam.x1 = 0.5 * 10;
-                _lineParam.x2 = 0.5 * 10;
-                _lineParam.y1 = -(parameters.RadiusBottom + 1 * 10);
-                _lineParam.y2 = -(parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop));
-                _lineParam.style = 1;
-                document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
-                _lineParam.x1 = 0.5 * 10;
-                _lineParam.x2 = 3.5 * 10;
-                _lineParam.y1 = -(parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop));
-                _lineParam.y2 = -(parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop));
-                _lineParam.style = 1;
-                document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
-                _lineParam.x1 = 3.5 * 10;
-                _lineParam.x2 = 3.5 * 10;
-                _lineParam.y1 = -(parameters.RadiusBottom - offset - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop));
-                _lineParam.y2 = -(parameters.RadiusBottom - (offset+10) - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop));
-                _lineParam.style = 1;
-                document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
-                _lineParam.x1 = 3.5 * 10;
-                _lineParam.x2 = 0.5 * 10;
-                _lineParam.y1 = -(parameters.RadiusBottom - (offset + 10) - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop));
-                _lineParam.y2 = -(parameters.RadiusBottom - (offset + 10) - Math.Abs(parameters.RadiusBottom - parameters.RadiusTop));
-                _lineParam.style = 1;
-                document2DStandBracing.ksLineSeg(_lineParam.x1, _lineParam.y1, _lineParam.x2, _lineParam.y2, _circleParam.style);
-                //ось 
-                ksAxisLineParam axisLineParam = _kompas.GetParamStruct((short)KSConstants.ko_AxisLineParam);
-                ksMathPointParam begpoint = axisLineParam.GetBegPoint();
-                ksMathPointParam endpoint = axisLineParam.GetEndPoint();
-                begpoint.x = 0;
-                begpoint.y = 0;
-                endpoint.x = 0;
-                endpoint.y = 4 * 10;
-                document2DStandBracing.ksAxisLine(axisLineParam);
-
-                sketchStandBracing.EndEdit();
-                #endregion
-
-                #region Выдаыливание вращением упоров ножек стойки
-                ksEntity entityRotateExtrusion = _part.NewEntity((short)KSConstants.o3d_baseRotated);
-                ksBaseRotatedDefinition rotatedDefinition = entityRotateExtrusion.GetDefinition();
-                rotatedDefinition.directionType = dtNormal;
-                rotatedDefinition.toroidShapeType = false;
-                rotatedDefinition.SetSideParam(true, 360);
-                rotatedDefinition.SetSketch(sketchStandBracing);
-                entityRotateExtrusion.Create();
-                #endregion
-                
-                #region эскиз для упоров ножек стойки
-                ksEntity entitStandStops = _part.NewEntity((short)KSConstants.o3d_sketch);
-                ksSketchDefinition sketchStandStops = entitStandStops.GetDefinition();
-                sketchStandStops.SetPlane(displacedPlaneStandStops);
-                entitStandStops.Create();
-                ksDocument2D document2DStandStops = sketchStandStops.BeginEdit();
-                _rectangleParam = _kompas.GetParamStruct((short)KSConstants.ko_RectangleParam);
-                _rectangleParam.ang = 0;
-                _rectangleParam.y = parameters.RadiusBottom + 1 * 10;
-                _rectangleParam.x = parameters.RadiusBottom;
-                _rectangleParam.width = -2*(parameters.RadiusBottom + 1 * 10);
-                _rectangleParam.height = 1 * 10;
-                _rectangleParam.style = 1;
-                document2DStandStops.ksRectangle(_rectangleParam, 0);
-                _rectangleParam.ang = 0;
-                _rectangleParam.y = -(parameters.RadiusBottom + 1 * 10);
-                _rectangleParam.x = -parameters.RadiusBottom;
-                _rectangleParam.width = 2*(parameters.RadiusBottom + 1 * 10);
-                _rectangleParam.height = -1 * 10;
-                _rectangleParam.style = 1;
-                document2DStandStops.ksRectangle(_rectangleParam, 0);
-
-                sketchStandStops.EndEdit();
-                #endregion
-
-                #region Выдавливание  упоров
-                ksEntity entityBaseExtrusion = _part.NewEntity((short)KSConstants.o3d_bossExtrusion);
-                ksBossExtrusionDefinition extrusionDefinition = entityBaseExtrusion.GetDefinition();
-                extrusionDefinition.directionType = 1;
-                extrusionDefinition.SetSideParam(false, etBlind, 1 * 10, 0, false);
-                extrusionDefinition.SetSketch(sketchStandStops);
-                entityBaseExtrusion.Create();
-                #endregion
-
-                #region эскиз для ножек
-                ksEntity entitStandLeg = _part.NewEntity((short)KSConstants.o3d_sketch);
-                ksSketchDefinition sketchStandLeg = entitStandLeg.GetDefinition();
-                sketchStandLeg.SetPlane(displacedPlaneStandLeg);
-                entitStandLeg.Create();
-                ksDocument2D document2DStandLeg = sketchStandLeg.BeginEdit();
-                _rectangleParam = _kompas.GetParamStruct((short)KSConstants.ko_RectangleParam);
-                _rectangleParam.ang = 0;
-                _rectangleParam.y = parameters.RadiusBottom + 1 * 10;
-                _rectangleParam.x = 0.5 * 10;
-                _rectangleParam.width = -1 * 10;
-                _rectangleParam.height = 1 * 10;
-                _rectangleParam.style = 1;
-                document2DStandLeg.ksRectangle(_rectangleParam, 0);
-                _rectangleParam.ang = 0;
-                _rectangleParam.y = -(parameters.RadiusBottom + 1 * 10);
-                _rectangleParam.x = -0.5 * 10;
-                _rectangleParam.width = 1 * 10;
-                _rectangleParam.height = -1 * 10;
-                _rectangleParam.style = 1;
-                document2DStandLeg.ksRectangle(_rectangleParam, 0);
-
-                sketchStandLeg.EndEdit();
-                #endregion
-
-                #region Выдавливание  ножек
-                ksEntity entityBaseExtrusionLeg = _part.NewEntity((short)KSConstants.o3d_bossExtrusion);
-                ksBossExtrusionDefinition extrusionDefinitionLeg = entityBaseExtrusionLeg.GetDefinition();
-                extrusionDefinitionLeg.directionType = 1;
-                extrusionDefinitionLeg.SetSideParam(false, etBlind, parameters.StandHeight -1 * 10 , 0, false);
-                extrusionDefinitionLeg.SetSketch(sketchStandLeg);
-                entityBaseExtrusionLeg.Create();
-                #endregion
-
-                #region эскиз перекладины
-                ksEntity entitStandBeam = _part.NewEntity((short)KSConstants.o3d_sketch);
-                ksSketchDefinition sketchStandBeam = entitStandBeam.GetDefinition();
-                sketchStandBeam.SetPlane(displacedPlaneStandBeam);
-                entitStandBeam.Create();
-                ksDocument2D document2DStandBeam = sketchStandBeam.BeginEdit();
-                _rectangleParam = _kompas.GetParamStruct((short)KSConstants.ko_RectangleParam);
-                _rectangleParam.ang = 0;
-                _rectangleParam.y = parameters.RadiusBottom+1*10;
-                _rectangleParam.x = -0.5*10;
-                _rectangleParam.height = -2*(parameters.RadiusBottom+1 * 10);
-                _rectangleParam.width = 1 * 10;
-                _rectangleParam.style = 1;
-                document2DStandBeam.ksRectangle(_rectangleParam, 0);
-
-                sketchStandBeam.EndEdit();
-                #endregion
-
-                #region Выдавливание  перекладины
-                ksEntity entityBaseExtrusionBeam = _part.NewEntity((short)KSConstants.o3d_bossExtrusion);
-                ksBossExtrusionDefinition extrusionDefinitionBeam = entityBaseExtrusionBeam.GetDefinition();
-                extrusionDefinitionBeam.SetSideParam(true, etBlind, 1*10, 0, false);
-                extrusionDefinitionBeam.SetSketch(sketchStandBeam);
-                entityBaseExtrusionBeam.Create();
-                #endregion
-
+                StandBuild(parameters);
             }
 
             if (parameters.Ashtray)
