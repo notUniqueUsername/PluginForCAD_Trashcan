@@ -7,6 +7,9 @@ using Kompas6API5;
 
 namespace PluginForCAD_TrashcanLibrary
 {
+    /// <summary>
+    /// Класс для работы с окном компаса
+    /// </summary>
     public class KompasConnector
     {
         /// <summary>

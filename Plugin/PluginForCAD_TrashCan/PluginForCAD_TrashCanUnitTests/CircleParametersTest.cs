@@ -111,29 +111,29 @@ namespace PluginForCAD_TrashCanUnitTests
 
         [Test]
         [TestCase(double.NaN, 1, 30, 25, 25, 40, true, false,
-            TestName = "Тест параметра 0 на NaN")]
+            TestName = "Тест bottomThickness на NaN")]
         [TestCase(2, double.NaN, 30, 25, 25, 40, true, false,
-            TestName = "Тест параметра 1 на NaN")]
+            TestName = "Тест wallThickness на NaN")]
         [TestCase(2, 1, double.NaN, 25, 25, 40, true, false,
-            TestName = "Тест параметра 2 на NaN")]
+            TestName = "Тест urnHeight на NaN")]
         [TestCase(2, 1, 30, double.NaN, 25, 40, true, false,
-            TestName = "Тест параметра 3 на NaN")]
+            TestName = "Тест bottomRadius на NaN")]
         [TestCase(2, 1, 30, 25, double.NaN, 40, true, false,
-            TestName = "Тест параметра 4 на NaN")]
+            TestName = "Тест topRadius на NaN")]
         [TestCase(2, 1, 30, 25, 25, double.NaN, true, false,
-            TestName = "Тест параметра 5 на NaN")]
+            TestName = "Тест standHeight на NaN")]
         [TestCase(double.PositiveInfinity, 1, 30, 25, 25, 40, true, false,
-            TestName = "Тест параметра 0 на infinity")]
+            TestName = "Тест bottomThickness на infinity")]
         [TestCase(2, double.PositiveInfinity, 30, 25, 25, 40, true, false,
-            TestName = "Тест параметра 1 на infinity")]
+            TestName = "Тест wallThickness на infinity")]
         [TestCase(2, 1, double.PositiveInfinity, 25, 25, 40, true, false,
-            TestName = "Тест параметра 2 на infinity")]
+            TestName = "Тест urnHeight на infinity")]
         [TestCase(2, 1, 30, double.PositiveInfinity, 25, 40, true, false,
-            TestName = "Тест параметра 3 на infinity")]
+            TestName = "Тест bottomRadius на infinity")]
         [TestCase(2, 1, 30, 25, double.PositiveInfinity, 40, true, false,
-            TestName = "Тест параметра 4 на infinity")]
+            TestName = "Тест topRadius на infinity")]
         [TestCase(2, 1, 30, 25, 25, double.PositiveInfinity, true, false,
-            TestName = "Тест параметра 5 на infinity")]
+            TestName = "Тест standHeight на infinity")]
         public void TestConstrutor_ParameterListTest(double bottomThickness, double wallThickness, double urnHeight, double bottomRadius, double topRadius, double standHeight, bool stand, bool ashtray)
         {
             _parametersList.Add(bottomThickness);

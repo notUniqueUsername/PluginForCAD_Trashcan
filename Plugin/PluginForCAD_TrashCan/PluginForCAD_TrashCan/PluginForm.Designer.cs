@@ -120,7 +120,7 @@
             this.MaximumSize = new System.Drawing.Size(2048, 577);
             this.MinimumSize = new System.Drawing.Size(407, 577);
             this.Name = "PluginForm";
-            this.Text = "PluginForm";
+            this.Text = "TrashCanPlugin";
             this.ResumeLayout(false);
             this.PerformLayout();
 

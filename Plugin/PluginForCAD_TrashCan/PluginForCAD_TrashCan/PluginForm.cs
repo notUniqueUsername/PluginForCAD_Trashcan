@@ -23,7 +23,7 @@ namespace PluginForCAD_TrashCanUI
         }
         
         /// <summary>
-        /// Обработка сены индекса в ComboBox для выбора формы урны
+        /// Обработка смены индекса в ComboBox для выбора формы урны
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

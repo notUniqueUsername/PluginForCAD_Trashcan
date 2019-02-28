@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace PluginForCAD_TrashcanLibrary
 {
     /// <summary>
-    /// Класс с параметрами
+    /// Класс с параметрами прямоуглоьной урны
     /// </summary>
     public class RectangleParameters
     {   
@@ -121,6 +121,7 @@ namespace PluginForCAD_TrashcanLibrary
         /// 4-ширина верхнего основания,5-длина нижнего основания,6-длина верхнего основания
         /// </param>
         /// <param name="stand">Наличие стойки</param>
+        /// <param name="ashtray">Наличие пепельницы</param>
         public RectangleParameters(List<double> parameters, bool stand, bool ashtray)
         {
             Stand = stand;

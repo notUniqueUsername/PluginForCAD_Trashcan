@@ -7,6 +7,9 @@ using Kompas6API5;
 
 namespace PluginForCAD_TrashcanLibrary
 {
+    /// <summary>
+    /// Класс построитель прямоугольной урны
+    /// </summary>
     public class RectangleUrnBuilder
     {
         /// <summary>

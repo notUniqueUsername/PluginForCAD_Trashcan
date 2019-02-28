@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PluginForCAD_TrashcanLibrary
 {
+    /// <summary>
+    /// Класс параметров круглой урны
+    /// </summary>
     public class CircleParameters
     {
         /// <summary>
@@ -107,6 +110,7 @@ namespace PluginForCAD_TrashcanLibrary
         /// Лист параметров
         /// </param>
         /// <param name="stand">Наличие стойки</param>
+        /// <param name="ashtray">Наличие пепельницы</param>
         public CircleParameters(List<double> parameters, bool stand, bool ashtray)
         {
             Stand = stand;

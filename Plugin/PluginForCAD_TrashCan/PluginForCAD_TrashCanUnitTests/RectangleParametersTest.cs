@@ -132,37 +132,37 @@ namespace PluginForCAD_TrashCanUnitTests
 
         [Test]
         [TestCase(double.NaN, 1, 35, 25, 50, 25, 50, 45, true, false,
-            TestName = "Тест параметра 0 на NaN")]
+            TestName = "Тест bottomThickness на NaN")]
         [TestCase(2, double.NaN, 35, 25, 50, 25, 50, 45, true, false,
-            TestName = "Тест параметра 1 на NaN")]
+            TestName = "Тест wallThickness на NaN")]
         [TestCase(2, 1, double.NaN, 25, 50, 25, 50, 45, true, false,
-            TestName = "Тест параметра 2 на NaN")]
+            TestName = "Тест urnHeight на NaN")]
         [TestCase(2, 1, 35, double.NaN, 50, 25, 50, 45, true, false,
-            TestName = "Тест параметра 3 на NaN")]
+            TestName = "Тест bottomWidth на NaN")]
         [TestCase(2, 1, 35, 25, double.NaN, 25, 50, 45, true, false,
-            TestName = "Тест параметра 4 на NaN")]
+            TestName = "Тест topWidth на NaN")]
         [TestCase(2, 1, 35, 25, 50, double.NaN, 50, 45, true, false,
-            TestName = "Тест параметра 5 на NaN")]
+            TestName = "Тест bottomLength на NaN")]
         [TestCase(2, 1, 35, 25, 50, 25, double.NaN, 45, true, false,
-            TestName = "Тест параметра 6 на NaN")]
+            TestName = "Тест topLength на NaN")]
         [TestCase(2, 1, 35, 25, 50, 25, 50, double.NaN, true, false,
-            TestName = "Тест параметра 7 на NaN")]
+            TestName = "Тест standHeight) на NaN")]
         [TestCase(double.PositiveInfinity, 1, 35, 25, 50, 25, 50, 45, true, false,
-            TestName = "Тест параметра 0 на infinity")]
+            TestName = "Тест bottomThickness на infinity")]
         [TestCase(2, double.PositiveInfinity, 35, 25, 50, 25, 50, 45, true, false,
-            TestName = "Тест параметра 1 на infinity")]
+            TestName = "Тест wallThickness на infinity")]
         [TestCase(2, 1, double.PositiveInfinity, 25, 50, 25, 50, 45, true, false,
-            TestName = "Тест параметра 2 на infinity")]
+            TestName = "Тест urnHeight на infinity")]
         [TestCase(2, 1, 35, double.PositiveInfinity, 50, 25, 50, 45, true, false,
-            TestName = "Тест параметра 3 на infinity")]
+            TestName = "Тест bottomWidth на infinity")]
         [TestCase(2, 1, 35, 25, double.PositiveInfinity, 25, 50, 45, true, false,
-            TestName = "Тест параметра 4 на infinity")]
+            TestName = "Тест topWidth на infinity")]
         [TestCase(2, 1, 35, 25, 50, double.PositiveInfinity, 50, 45, true, false,
-            TestName = "Тест параметра 5 на infinity")]
+            TestName = "Тест bottomLength на infinity")]
         [TestCase(2, 1, 35, 25, 50, 25, double.PositiveInfinity, 45, true, false,
-            TestName = "Тест параметра 6 на infinity")]
+            TestName = "Тест topLength на infinity")]
         [TestCase(2, 1, 35, 25, 50, 25, 50, double.PositiveInfinity, true, false,
-            TestName = "Тест параметра 7 на infinity")]
+            TestName = "Тест standHeight) на infinity")]
         public void TestConstructor_ParameterListTest(double bottomThickness, double wallThickness,
             double urnHeight, double topWidth, double bottomWidth, double topLength,
             double bottomLength, double standHeight, bool stand, bool ashtray)
