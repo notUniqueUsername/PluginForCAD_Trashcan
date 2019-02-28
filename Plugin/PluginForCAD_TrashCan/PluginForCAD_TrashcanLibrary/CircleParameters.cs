@@ -104,7 +104,7 @@ namespace PluginForCAD_TrashcanLibrary
 
 
         /// <summary>
-        /// Конструктор, конструирует и проверяет
+        /// Конструктор
         /// </summary>
         /// <param name="parameters">
         /// Лист параметров

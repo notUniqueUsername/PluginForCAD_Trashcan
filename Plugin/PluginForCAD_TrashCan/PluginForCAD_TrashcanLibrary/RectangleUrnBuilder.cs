@@ -48,7 +48,7 @@ namespace PluginForCAD_TrashcanLibrary
         private Document3D _doc3D;
 
         /// <summary>
-        /// Строим пепельницу
+        /// Построение пепельницы
         /// </summary>
         /// <param name="parameters"></param>
         private void AshtrayBuild(RectangleParameters parameters)
@@ -204,7 +204,7 @@ namespace PluginForCAD_TrashcanLibrary
         }
 
         /// <summary>
-        /// Строим урну
+        /// Построение тела урны
         /// </summary>
         /// <param name="parameters"></param>
         private void UrnBuild(RectangleParameters parameters)
@@ -339,7 +339,7 @@ namespace PluginForCAD_TrashcanLibrary
         }
 
         /// <summary>
-        /// Строим стойку
+        /// Построение стойки
         /// </summary>
         /// <param name="parameters"></param>
         private void StandBuild(RectangleParameters parameters)
@@ -624,7 +624,7 @@ namespace PluginForCAD_TrashcanLibrary
         }
 
         /// <summary>
-        /// Строим
+        /// Построение урны
         /// </summary>
         /// <param name="parameters"></param>
         public void Build(RectangleParameters parameters)

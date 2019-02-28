@@ -57,7 +57,7 @@ namespace PluginForCAD_TrashcanLibrary
         }
 
         /// <summary>
-        /// Строим пепельницу
+        /// Построение пепельницы
         /// </summary>
         /// <param name="parameters"></param>
         private void AshtrayBuild(CircleParameters parameters)
@@ -204,7 +204,7 @@ namespace PluginForCAD_TrashcanLibrary
         }
 
         /// <summary>
-        /// Строим стойку
+        /// Построение стойки
         /// </summary>
         /// <param name="parameters"></param>
         private void StandBuild(CircleParameters parameters)
@@ -488,6 +488,10 @@ namespace PluginForCAD_TrashcanLibrary
 
         }
 
+        /// <summary>
+        /// Построение тела урны
+        /// </summary>
+        /// <param name="parameters"></param>
         private void UrnBuild(CircleParameters parameters)
         {
             #region Эскиз нижненго основания
@@ -616,7 +620,7 @@ namespace PluginForCAD_TrashcanLibrary
         }
 
         /// <summary>
-        /// Строим
+        /// Построение урны
         /// </summary>
         /// <param name="parameters"></param>
         public void Build(CircleParameters parameters)
